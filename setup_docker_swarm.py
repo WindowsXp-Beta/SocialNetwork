@@ -20,10 +20,12 @@ sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && \
 sudo apt-get update && \
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
 docker-ce docker-ce-cli containerd.io'''
+install_monitor_tool = 'sudo apt-get install collectl sysdig'
 args = parse_args()
 
 with ThreadingGroup(*[f'node-{idx}' for idx in range(0, args.number)]) as grp:
-    res = grp.run(install_docker)
+    grp.run(install_monitor_tool)
+    grp.run(install_docker)
     def stop_swarm_cluster():
         grp.run('sudo docker swarm leave')
         subprocess.run(shlex.split('sudo docker swarm leave -f'))
@@ -34,7 +36,7 @@ with ThreadingGroup(*[f'node-{idx}' for idx in range(0, args.number)]) as grp:
         grp.run('sudo rm -rf /var/lib/containerd')
         grp.run('sudo rm -rf /var/lib/docker')
         grp.run('sudo rm /etc/apt/keyrings/docker.gpg')
-    # uninstall_docker()
+    # clear_env()
     ret = subprocess.run(['sudo', 'docker', 'swarm', 'init', '--advertise-addr', args.ip], capture_output=True)
     swarm_join_cmd_ptn = r'(docker swarm join --token .*:\d+)'
     swarm_join_cmd = re.search(swarm_join_cmd_ptn, ret.stdout.decode('utf-8'))
