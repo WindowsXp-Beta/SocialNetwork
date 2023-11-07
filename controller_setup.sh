@@ -44,13 +44,14 @@ scp -o StrictHostKeyChecking=no -i ${private_ssh_key_path} -r ${social_network_p
 # clone env_setup repo in manager node
 ssh -o StrictHostKeyChecking=no -i ${private_ssh_key_path} ${username}@${controller_node} "
     ssh-keygen -F github.com || ssh-keyscan github.com >> ~/.ssh/known_hosts
-    # git config --global user.email ${git_email}
-    # git config --global user.name ${username}
-    # git clone git@github.com:WindowsXp-Beta/SocialNetwork.git SetupScripts
-    # git clone https://github.com/delimitrou/DeathStarBench.git
-    # sudo apt-get update
+    git config --global user.email ${git_email}
+    git config --global user.name ${username}
+    git clone git@github.com:WindowsXp-Beta/SocialNetwork.git SetupScripts
+    git clone https://github.com/delimitrou/DeathStarBench.git
+    unzip socialNetworkLSU
+    sudo apt-get update
     sudo apt-get install -y python3-pip maven
     cd SetupScripts
     pip3 install -r requirements.txt
-    # python setup_docker_swarm.py -a 10.10.1.1 -n ${node_number}
+    python setup_docker_swarm.py -a 10.10.1.1 -n ${node_number}
 "

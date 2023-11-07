@@ -20,12 +20,14 @@ sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && \
 sudo apt-get update && \
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
 docker-ce docker-ce-cli containerd.io'''
-install_monitor_tool = 'sudo apt-get update && sudo apt-get install -y collectl sysdig'
+install_monitor_tool = 'sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y collectl sysdig'
+clone_official_socialnetwork_repo = 'ssh-keygen -F github.com || ssh-keyscan github.com >> ~/.ssh/known_hosts && git clone https://github.com/delimitrou/DeathStarBench.git'
 args = parse_args()
 
 with ThreadingGroup(*[f'node-{idx}' for idx in range(0, args.number)]) as grp:
     grp.run(install_monitor_tool)
     grp.run(install_docker)
+    grp.run(clone_official_socialnetwork_repo)
     def stop_swarm_cluster():
         grp.run('sudo docker swarm leave')
         subprocess.run(shlex.split('sudo docker swarm leave -f'))
