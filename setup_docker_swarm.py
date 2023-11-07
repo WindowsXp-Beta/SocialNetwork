@@ -20,7 +20,7 @@ sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && \
 sudo apt-get update && \
 sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
 docker-ce docker-ce-cli containerd.io'''
-install_monitor_tool = 'sudo apt-get install collectl sysdig'
+install_monitor_tool = 'sudo apt-get update && sudo apt-get install -y collectl sysdig'
 args = parse_args()
 
 with ThreadingGroup(*[f'node-{idx}' for idx in range(0, args.number)]) as grp:
