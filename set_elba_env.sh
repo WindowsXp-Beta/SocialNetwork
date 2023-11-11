@@ -3,13 +3,12 @@
 set -o allexport
 
 # HOSTS
-CONTROL_HOST=192.168.10.130
-BENCHMARK_HOST=192.168.10.36
-CLIENT1_HOST=192.168.10.37
-CLIENT2_HOST=192.168.10.38
-CLIENT3_HOST=192.168.10.39
-CLIENT4_HOST=192.168.10.40
-
+CONTROL_HOST=10.10.1.1
+BENCHMARK_HOST=10.10.1.7
+CLIENT1_HOST=10.10.1.8
+CLIENT2_HOST=10.10.1.9
+CLIENT3_HOST=10.10.1.10
+CLIENT4_HOST=10.10.1.11
 
 # ignore below three
 HTTPD_HOST=192.168.10.135
@@ -25,19 +24,19 @@ EXPERIMENT_CONFIG=111-xgu-AP150-TP50-DP10
 EXPERIMENT_CONFIG_TIERS=3
 
 # Directories from which files are copied
-WORK_HOME=/root/DeathStarBench/socialNetwork
-OUTPUT_HOME=/root/DeathStarBench/socalNetwork/output
+WORK_HOME=$HOME/DeathStarBench/socialNetwork
+OUTPUT_HOME=$HOME/DeathStarBench/socalNetwork/output
 SOFTWARE_HOME=/home/xgu/rubbos/software
 
 # Output directory for results of RUBBoS benchmark
-RUBBOS_RESULTS_HOST=storage
-RUBBOS_RESULTS_DIR_BASE=/root/socialNetwork
+RUBBOS_RESULTS_HOST=node-0
+RUBBOS_RESULTS_DIR_BASE=$HOME/socialNetwork
 RUBBOS_RESULTS_DIR_NAME=2023-0408-WL5000-readHomeTimeline
 
 # Output directory for results of RUBBoS benchmark on Bonn and SysViz servers
 BONN_HOST=storage
-BONN_RUBBOS_RESULTS_DIR_BASE=/root/socialNetwork
-BONN_SCRIPTS_BASE=/root/rubbosResult/scripts
+BONN_RUBBOS_RESULTS_DIR_BASE=$HOME/socialNetwork
+BONN_SCRIPTS_BASE=$HOME/rubbosResult/scripts
 
 
 SYSVIZ_HOST=qywang@incheon.cc.gt.atl.ga.us
@@ -48,11 +47,11 @@ SYSVIZ_RUBBOS_RESULTS_DIR_BASE=/home/qywang/AnaResult-CA
 
 
 # Target directories
-ELBA_TOP=/root/elba
+ELBA_TOP=$HOME/elba
 RUBBOS_TOP=$ELBA_TOP/rubbos
-TMP_RESULTS_DIR_BASE=/root/elba/rubbos/results
-RUBBOS_HOME=/root/elba/rubbos/RUBBoS
-SYSSTAT_HOME=/home/xgu/elba/rubbos/sysstat-10.0.2
+TMP_RESULTS_DIR_BASE=$HOME/elba/rubbos/results
+RUBBOS_HOME=$HOME/elba/rubbos/RUBBoS
+SYSSTAT_HOME=$HOME/elba/rubbos/sysstat-10.0.2
 HTTPD_HOME=/home/xgu/elba/rubbos/apache2
 HTTPD_INSTALL_FILES=$RUBBOS_TOP/httpd-2.2.31
 MOD_JK_INSTALL_FILES=$RUBBOS_TOP/tomcat-connectors-1.2.46-src
@@ -63,9 +62,9 @@ MYSQL_HOME=$RUBBOS_TOP/mysql-5.5.54-linux2.6-x86_64
 JONAS_ROOT=$RUBBOS_TOP/JONAS_4_6_6
 
 # Java & Ant
-JAVA_HOME=/root/elba/rubbos/jdk1.8.0_241
+JAVA_HOME=$HOME/elba/rubbos/jdk1.8.0_241
 JAVA_OPTS="-Xmx1300m"
-J2EE_HOME=/root/elba/rubbos/j2sdkee1.3.1
+J2EE_HOME=$HOME/elba/rubbos/j2sdkee1.3.1
 ANT_HOME=$RUBBOS_TOP/apache-ant-1.6.5
 
 # Tarballs
