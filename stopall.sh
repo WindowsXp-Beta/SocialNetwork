@@ -1,6 +1,6 @@
 #!/bin/bash
 
-cd /root/DeathStarBench/socialNetwork/
+cd $HOME/DeathStarBench/socialNetwork/
 source ./set_elba_env.sh
 
 #$OUTPUT_HOME/scripts/stop_all.sh
@@ -19,7 +19,7 @@ do
 done
 
 ssh node-0 "
-	cd /root/DeathStarBench/socialNetwork/
+	cd $HOME/DeathStarBench/socialNetwork/
 	./scripts/endCollectl.sh
 
 "
