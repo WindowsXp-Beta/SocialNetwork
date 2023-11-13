@@ -3,6 +3,7 @@ import subprocess
 import shlex
 import argparse
 import re
+import os
 from pathlib import Path
 
 def parse_args():
@@ -30,8 +31,11 @@ args = parse_args()
 with ThreadingGroup(*[f'node-{idx}' for idx in range(0, args.number)]) as swarm_grp, \
      ThreadingGroup(*[f'node-{idx}' for idx in range(args.number, args.number + args.client_number)]) as client_grp:
     swarm_grp.run(install_collectl)
+    print('** collectl installed **')
     swarm_grp.run(clone_official_socialnetwork_repo)
+    print('** socialNetwork cloned **')
     swarm_grp.run(install_docker)
+    print('** docker installed **')
 
     def stop_swarm_cluster():
         swarm_grp.run('sudo docker swarm leave')
@@ -46,6 +50,7 @@ with ThreadingGroup(*[f'node-{idx}' for idx in range(0, args.number)]) as swarm_
     # clear_env()
 
     ret = subprocess.run(['sudo', 'docker', 'swarm', 'init', '--advertise-addr', args.ip], capture_output=True)
+    print('** swarm manager initialized **')
     swarm_join_cmd_ptn = r'(docker swarm join --token .*:\d+)'
     swarm_join_cmd = re.search(swarm_join_cmd_ptn, ret.stdout.decode('utf-8'))
     if swarm_join_cmd is None:
@@ -56,11 +61,54 @@ with ThreadingGroup(*[f'node-{idx}' for idx in range(0, args.number)]) as swarm_
         swarm_join_cmd = swarm_join_cmd.group()
     with ThreadingGroup.from_connections(swarm_grp[1:]) as grp_worker:
         grp_worker.run('sudo ' + swarm_join_cmd)
+        grp_worker.put(shlex.split('test ! -f ~/.ssh/config && echo -e "Host *\n\tStrictHostKeyChecking no" >> ~/.ssh/config'))
+        grp_worker.put(Path.home()/'.ssh'/'id_rsa', '.ssh')
+    print('** swarm cluster ready **')
+
+    subprocess.run(shlex.split('sudo docker service create --name registry \
+                               --publish published=5000,target=5000 registry:2'))
+    print('** registry service created **')
 
     client_grp[0].run(install_sysdig)
-    client_grp[0].put(Path(Path.home()), 'DeathStarBench/socialNetwork')
+    client_grp.put(Path(Path.home()), '.ssh/id_rsa')
+    client_grp.run(shlex.split('test ! -f ~/.ssh/config && echo -e "Host *\n\tStrictHostKeyChecking no" >> ~/.ssh/config'))
+    swarm_grp.run(shlex.split('test ! -f ~/.ssh/config && echo -e "Host *\n\tStrictHostKeyChecking no" >> ~/.ssh/config'))
     client_grp.put(Path(Path.home(), 'RubbosClient.zip'))
     client_grp.run('unzip RubbosClient.zip')
     client_grp.run('mv RubbosClient/elba .')
     client_grp.run('mv RubbosClient/rubbos .')
     client_grp.run('ls')
+    print('** RubbosClient copied **')
+
+    # os.chdir(Path.home())
+    subprocess.run(shlex.split('unzip src.zip RubbosClient_src.zip socialNetwork.zip scripts_limit.zip'))
+    subprocess.run(shlex.split('mv DeathStarBench/socialNetwork/src DeathStarBench/socialNetwork/src.bk && \
+                               mv src DeathStarBench/socialNetwork/'))
+    os.chdir(Path.home()/'DeathStarBench'/'socialNetwork')
+    subprocess.run(shlex.split('sudo docker build -t 127.0.0.1:5000/social-network-microservices:withLog_01 .'))
+    subprocess.run(shlex.split('sudo docker push 127.0.0.1:5000/social-network-microservices:withLog_01'))
+    print('** customized socialNetwork docker image built **')
+
+    subprocess.run(shlex.split('mv socialNetwork/*.sh DeathStarBench/socialNetwork/'))
+    subprocess.run(shlex.split('mv socialNetwork/scripts/*.sh DeathStarBench/socialNetwork/scripts/'))
+    subprocess.run(shlex.split('mv ../../SetupScripts/docker-compose-swarm.yml .'))
+    subprocess.run(shlex.split('sudo ./start.sh start'))
+    print('** socialNetwork stack deployed **')
+
+    os.chdir(Path.home()/'RubbosClient_src')
+    subprocess.run(shlex.split('mvn clean'))
+    subprocess.run(shlex.split('mvn package'))
+    subprocess.run('./cpToCloud.sh')
+    print('** client binary distributed **')
+
+    # we move register here to ensure all the services have launched
+    os.chdir(Path.home()/'DeathStarBench'/'wrk2')
+    subprocess.run('make')
+    subprocess.run(shlex.split('sudo apt-get install libssl-dev libz-dev luarocks'))
+    subprocess.run(shlex.split('sudo luarocks install luasocket'))
+    os.chdir(Path.home()/'DeathStarBench'/'socialNetwork')
+    subprocess.run(shlex.split('./start.sh register'))
+    subprocess.run(shlex.split('./start.sh compose'))
+    print('** socialNetwork data created **')
+    subprocess.run(shlex.split('sudo ./start.sh dedicate'))
+    print('** core dedicated **')

@@ -33,7 +33,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-2.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-2.xinpengw-177986.infosphere-pg0.apt.emulab.net]
     command: ["ComposePostService"]
     hostname: compose-post-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -53,7 +53,7 @@ services:
       - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-2.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-2.xinpengw-177986.infosphere-pg0.apt.emulab.net]
 
   home-timeline-service:
     depends_on:
@@ -64,7 +64,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-0.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-0.xinpengw-177986.infosphere-pg0.apt.emulab.net]
     command: ["HomeTimelineService"]
     hostname: home-timeline-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -81,7 +81,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-3.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-3.xinpengw-177986.infosphere-pg0.apt.emulab.net]
     hostname: media-frontend
     image: yg397/media-frontend:xenial
     ports:
@@ -103,7 +103,7 @@ services:
       - "-c 4096"
     deploy:
       placement:
-        constraints: [node.hostname == node-1.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-1.xinpengw-177986.infosphere-pg0.apt.emulab.net]
 
   media-mongodb:
     depends_on:
@@ -118,7 +118,7 @@ services:
       - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-3.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-3.xinpengw-177986.infosphere-pg0.apt.emulab.net]
 
   media-service:
     depends_on:
@@ -130,7 +130,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-2.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-2.xinpengw-177986.infosphere-pg0.apt.emulab.net]
     command: ["MediaService"]
     hostname: media-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -147,7 +147,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-5.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-5.xinpengw-177986.infosphere-pg0.apt.emulab.net]
     hostname: nginx-web-server
     image: yg397/openresty-thrift:xenial
     ports:
@@ -174,7 +174,7 @@ services:
       - "-c 4096"
     deploy:
       placement:
-        constraints: [node.hostname == node-2.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-2.xinpengw-177986.infosphere-pg0.apt.emulab.net]
 
   post-storage-mongodb:
     depends_on:
@@ -189,7 +189,7 @@ services:
       - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-1.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-1.xinpengw-177986.infosphere-pg0.apt.emulab.net]
 
   post-storage-service:
     depends_on:
@@ -201,7 +201,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-1.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-1.xinpengw-177986.infosphere-pg0.apt.emulab.net]
     command: ["PostStorageService"]
     hostname: post-storage-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -222,7 +222,7 @@ services:
       - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-2.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-2.xinpengw-177986.infosphere-pg0.apt.emulab.net]
 
   social-graph-redis:
     depends_on:
@@ -236,7 +236,7 @@ services:
       - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-4.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-4.xinpengw-177986.infosphere-pg0.apt.emulab.net]
 
   social-graph-service:
     depends_on:
@@ -248,7 +248,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-3.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-3.xinpengw-177986.infosphere-pg0.apt.emulab.net]
     command: ["SocialGraphService"]
     hostname: social-graph-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -265,7 +265,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-3.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-3.xinpengw-177986.infosphere-pg0.apt.emulab.net]
     command: ["TextService"]
     hostname: text-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -282,7 +282,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-4.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-4.xinpengw-177986.infosphere-pg0.apt.emulab.net]
     command: ["UniqueIdService"]
     hostname: unique-id-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -303,12 +303,12 @@ services:
       - "-c 4096"
     deploy:
       placement:
-        constraints: [node.hostname == node-3.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-3.xinpengw-177986.infosphere-pg0.apt.emulab.net]
 
   url-shorten-mongodb:
-    # depends_on:
-      # - jaeger-agent
-      # - jaeger-query
+    depends_on:
+      - jaeger-agent
+      - jaeger-query
     hostname: url-shorten-mongodb
     image: mongo:4.4.6
     command: "mongod --nojournal --quiet --config /social-network-microservices/config/mongod.conf"
@@ -318,7 +318,7 @@ services:
       - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-5.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-5.xinpengw-177986.infosphere-pg0.apt.emulab.net]
 
   url-shorten-service:
     depends_on:
@@ -330,7 +330,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-2.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-2.xinpengw-177986.infosphere-pg0.apt.emulab.net]
     command: ["UrlShortenService"]
     hostname: url-shorten-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -351,18 +351,18 @@ services:
       - "-c 4096"
     deploy:
       placement:
-        constraints: [node.hostname == node-4.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-4.xinpengw-177986.infosphere-pg0.apt.emulab.net]
 
   user-mention-service:
-    # depends_on:
-      # - jaeger-agent
-      # - jaeger-query
+    depends_on:
+      - jaeger-agent
+      - jaeger-query
     deploy:
       replicas: 1
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-2.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-2.xinpengw-177986.infosphere-pg0.apt.emulab.net]
     command: ["UserMentionService"]
     hostname: user-mention-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -383,7 +383,7 @@ services:
       - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-0.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-0.xinpengw-177986.infosphere-pg0.apt.emulab.net]
 
   user-service:
     depends_on:
@@ -395,7 +395,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-4.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-4.xinpengw-177986.infosphere-pg0.apt.emulab.net]
     command: ["UserService"]
     hostname: user-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -416,7 +416,7 @@ services:
       - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-4.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-4.xinpengw-177986.infosphere-pg0.apt.emulab.net]
 
   user-timeline-redis:
     depends_on:
@@ -430,7 +430,7 @@ services:
       - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-3.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-3.xinpengw-177986.infosphere-pg0.apt.emulab.net]
 
   user-timeline-service:
     depends_on:
@@ -441,7 +441,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-4.xinpengw-176335.infosphere-pg0.utah.cloudlab.us]
+        constraints: [node.hostname == node-4.xinpengw-177986.infosphere-pg0.apt.emulab.net]
     command: ["UserTimelineService"]
     hostname: user-timeline-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
