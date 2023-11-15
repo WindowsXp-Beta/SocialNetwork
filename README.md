@@ -2,14 +2,15 @@
 ./controller_setup.sh \
 --username XinpengW \
 --private_ssh_key_path "/Users/weixinpeng/.ssh/id_rsa" \
---controller_node controller_node_name \
---git_email your@git.email \
---social_network_path "path/to/your/socialnetwork/folder"
---node_number 6
+--controller_node apt186.apt.emulab.net \
+--git_email william.xp.wei@gatech.edu \
+--swarm_node_number 6 \
+--client_node_number 5
 ```
 
-hostname format is `node-{idx}.{experiment_name}.infosphere-pg0.{ssh-host}`.
+hostname format is `node-{idx}.{experiment_name}.infosphere-pg0.{ssh-host without the first varying part}`.
 > The experiment name's format is `username-number`, e.g. XinpengW-177986
+> for ssh-host, suppose a host is `apt186.apt.emulab.net`, then we pick the latter three parts without the first varying one
 
 # Original README
 ## Preliminary

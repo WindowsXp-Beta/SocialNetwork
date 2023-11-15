@@ -4,7 +4,7 @@
 #   mkdir -p $RUBBOS_RESULTS_DIR_BASE
 # "
 ssh benchmark "
-  source $HOME/elba/rubbos/set_elba_env.sh
+  source $HOME/rubbos/set_elba_env.sh
   mkdir -p $TMP_RESULTS_DIR_BASE/$RUBBOS_RESULTS_DIR_NAME
   rm -rf $TMP_RESULTS_DIR_BASE/$RUBBOS_RESULTS_DIR_NAME/*
 "
@@ -14,7 +14,7 @@ for i in "rubbos.properties_5000"
 do
 
   ssh benchmark "
-    source $HOME/elba/rubbos/set_elba_env.sh
+    source $HOME/rubbos/set_elba_env.sh
     rm -f $RUBBOS_HOME/Client/rubbos.properties
   "
 

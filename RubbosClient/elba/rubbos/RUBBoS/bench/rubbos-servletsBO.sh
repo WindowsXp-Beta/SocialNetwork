@@ -2,17 +2,17 @@
 
 ###############################################################################
 #
-# This script runs first the RUBBoS browsing mix, then the read/write mix 
+# This script runs first the RUBBoS browsing mix, then the read/write mix
 # for each rubbos.properties_XX specified where XX is the number of emulated
 # clients. Note that the rubbos.properties_XX files must be configured
 # with the corresponding number of clients.
 # In particular set the following variables in rubis.properties_XX:
 # httpd_use_version = Servlets
 # workload_number_of_clients_per_node = XX/number of client machines
-# workload_transition_table = yourPath/RUBBoS/workload/transitions.txt 
+# workload_transition_table = yourPath/RUBBoS/workload/transitions.txt
 #
-# This script should be run from the RUBBoS/bench directory on the local 
-# client machine. 
+# This script should be run from the RUBBoS/bench directory on the local
+# client machine.
 # Results will be generated in the RUBBoS/bench directory.
 #
 ################################################################################
@@ -57,4 +57,3 @@ ssh $CLIENT4_HOST "$RUBBOS_HOME/bench/flush_cache 490000"       # remote client
 
 #make emulator
 make newemulator
-
