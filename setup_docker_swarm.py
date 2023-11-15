@@ -61,7 +61,7 @@ with ThreadingGroup(*[f'node-{idx}' for idx in range(0, args.number)]) as swarm_
         swarm_join_cmd = swarm_join_cmd.group()
     with ThreadingGroup.from_connections(swarm_grp[1:]) as grp_worker:
         grp_worker.run('sudo ' + swarm_join_cmd)
-        grp_worker.put(shlex.split('test ! -f ~/.ssh/config && echo -e "Host *\n\tStrictHostKeyChecking no" >> ~/.ssh/config'))
+        grp_worker.run('if [ ! -e "$HOME/.ssh/config" ]; then echo -e "Host *\n\tStrictHostKeyChecking no" >> $HOME/.ssh/config; fi')
         grp_worker.put(Path.home()/'.ssh'/'id_rsa', '.ssh')
     print('** swarm cluster ready **')
 
@@ -70,28 +70,29 @@ with ThreadingGroup(*[f'node-{idx}' for idx in range(0, args.number)]) as swarm_
     print('** registry service created **')
 
     client_grp[0].run(install_sysdig)
-    client_grp.put(Path(Path.home()), '.ssh/id_rsa')
-    client_grp.run(shlex.split('test ! -f ~/.ssh/config && echo -e "Host *\n\tStrictHostKeyChecking no" >> ~/.ssh/config'))
-    swarm_grp.run(shlex.split('test ! -f ~/.ssh/config && echo -e "Host *\n\tStrictHostKeyChecking no" >> ~/.ssh/config'))
-    client_grp.put(Path(Path.home(), 'RubbosClient.zip'))
+    client_grp.put(Path.home()/'.ssh/id_rsa', '.ssh')
+    client_grp.run('if [ ! -e "$HOME/.ssh/config" ]; then echo -e "Host *\n\tStrictHostKeyChecking no" >> $HOME/.ssh/config; fi')
+    client_grp.put(Path.home()/'RubbosClient.zip')
     client_grp.run('unzip RubbosClient.zip')
     client_grp.run('mv RubbosClient/elba .')
     client_grp.run('mv RubbosClient/rubbos .')
-    client_grp.run('ls')
+    client_grp.run('gcc /users/XinpengW/elba/rubbos/RUBBoS/bench/flush_cache.c -o /users/XinpengW/elba/rubbos/RUBBoS/bench/flush_cache')
     print('** RubbosClient copied **')
 
-    # os.chdir(Path.home())
-    subprocess.run(shlex.split('unzip src.zip RubbosClient_src.zip socialNetwork.zip scripts_limit.zip'))
-    subprocess.run(shlex.split('mv DeathStarBench/socialNetwork/src DeathStarBench/socialNetwork/src.bk && \
-                               mv src DeathStarBench/socialNetwork/'))
+    os.chdir(Path.home())
+    for file in ['src', 'RubbosClient_src', 'socialNetwork', 'scripts_limit']:
+        subprocess.run(shlex.split(f'unzip {file}.zip'))
+    subprocess.run(shlex.split('mv DeathStarBench/socialNetwork/src DeathStarBench/socialNetwork/src.bk'))
+    subprocess.run(shlex.split('mv src DeathStarBench/socialNetwork/'))
     os.chdir(Path.home()/'DeathStarBench'/'socialNetwork')
     subprocess.run(shlex.split('sudo docker build -t 127.0.0.1:5000/social-network-microservices:withLog_01 .'))
     subprocess.run(shlex.split('sudo docker push 127.0.0.1:5000/social-network-microservices:withLog_01'))
     print('** customized socialNetwork docker image built **')
 
-    subprocess.run(shlex.split('mv socialNetwork/*.sh DeathStarBench/socialNetwork/'))
-    subprocess.run(shlex.split('mv socialNetwork/scripts/*.sh DeathStarBench/socialNetwork/scripts/'))
-    subprocess.run(shlex.split('mv ../../SetupScripts/docker-compose-swarm.yml .'))
+    os.chdir(Path.home())
+    subprocess.run('mv socialNetwork/* DeathStarBench/socialNetwork/', shell=True)
+    subprocess.run('mv socialNetwork/scripts/*.sh DeathStarBench/socialNetwork/scripts/', shell=True)
+    os.chdir(Path.home()/'DeathStarBench'/'socialNetwork')
     subprocess.run(shlex.split('sudo ./start.sh start'))
     print('** socialNetwork stack deployed **')
 
@@ -104,11 +105,12 @@ with ThreadingGroup(*[f'node-{idx}' for idx in range(0, args.number)]) as swarm_
     # we move register here to ensure all the services have launched
     os.chdir(Path.home()/'DeathStarBench'/'wrk2')
     subprocess.run('make')
-    subprocess.run(shlex.split('sudo apt-get install libssl-dev libz-dev luarocks'))
+    subprocess.run(shlex.split('sudo apt-get -y install libssl-dev libz-dev luarocks'))
     subprocess.run(shlex.split('sudo luarocks install luasocket'))
     os.chdir(Path.home()/'DeathStarBench'/'socialNetwork')
     subprocess.run(shlex.split('./start.sh register'))
     subprocess.run(shlex.split('./start.sh compose'))
     print('** socialNetwork data created **')
+
     subprocess.run(shlex.split('sudo ./start.sh dedicate'))
     print('** core dedicated **')
