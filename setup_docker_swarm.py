@@ -108,9 +108,14 @@ with ThreadingGroup(*[f'node-{idx}' for idx in range(0, args.number)]) as swarm_
     subprocess.run(shlex.split('sudo apt-get -y install libssl-dev libz-dev luarocks'))
     subprocess.run(shlex.split('sudo luarocks install luasocket'))
     os.chdir(Path.home()/'DeathStarBench'/'socialNetwork')
+    # TODO: check if socialNetwork is successfully deployed
     subprocess.run(shlex.split('./start.sh register'))
     subprocess.run(shlex.split('./start.sh compose'))
     print('** socialNetwork data created **')
 
     subprocess.run(shlex.split('sudo ./start.sh dedicate'))
     print('** core dedicated **')
+
+    subprocess.run(shlex.split('source set_elba_env.sh'))
+    print('** begin running CONTROL_exec.sh **')
+    subprocess.run(shlex.split('./scripts/CONTROL_exec.sh'))

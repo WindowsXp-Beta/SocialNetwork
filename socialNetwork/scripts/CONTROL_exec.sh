@@ -10,7 +10,7 @@ ssh benchmark "
 "
 
 # Trying to simulation 5000 users
-for i in "rubbos.properties_5000"
+for i in "rubbos.properties_100"
 do
 
   ssh benchmark "
@@ -68,7 +68,7 @@ do
     sleep 2
 
     cd ..
-    mv 20* $TMP_RESULTS_DIR_BASE/$RUBBOS_RESULTS_DIR_NAME/
+    # mv 20* $TMP_RESULTS_DIR_BASE/$RUBBOS_RESULTS_DIR_NAME/
     scp -r $TMP_RESULTS_DIR_BASE/$RUBBOS_RESULTS_DIR_NAME $RUBBOS_RESULTS_HOST:$BONN_RUBBOS_RESULTS_DIR_BASE
   "
 
