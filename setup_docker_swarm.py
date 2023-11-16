@@ -114,8 +114,4 @@ with ThreadingGroup(*[f'node-{idx}' for idx in range(0, args.number)]) as swarm_
     print('** socialNetwork data created **')
 
     subprocess.run(shlex.split('sudo ./start.sh dedicate'))
-    print('** core dedicated **')
-
-    subprocess.run(shlex.split('source set_elba_env.sh'))
-    print('** begin running CONTROL_exec.sh **')
-    subprocess.run(shlex.split('./scripts/CONTROL_exec.sh'))
+    print('** core dedicated **\n** all the work is done, begin running the experiment **')
