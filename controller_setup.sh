@@ -40,9 +40,6 @@ while [[ $# > 1 ]]; do
     --git_email )
       git_email=$2
       ;;
-    --git_username )
-      git_username=$2
-      ;;
     --swarm_node_number )
       swarm_node_number=$2
       ;;
@@ -67,13 +64,12 @@ ssh -o StrictHostKeyChecking=no -i ${private_ssh_key_path} ${username}@${control
   echo -e 'Host *\n\tStrictHostKeyChecking no\nHost benchmark\n\tHostName 10.10.1.7\n\tUser Preethi' >> ~/.ssh/config
   sudo sh -c \"echo 'Host *\n\tStrictHostKeyChecking no' >> /root/.ssh/config\"
   git config --global user.email ${git_email}
-  git config --global user.name ${git_username}
+  git config --global user.name Preethi
   git clone git@github.com:WindowsXp-Beta/SocialNetwork.git SetupScripts
   unzip socialNetworkLSU
   sudo apt-get update
   sudo apt-get install -y python3-pip maven
   cd SetupScripts
   pip3 install -r requirements.txt
-  python setup_docker_swarm.py -a 10.10.1.1 -n ${swarm_node_number} -cn ${client_node_number} -u ${username}
-"
+  python setup_docker_swarm.py -a 10.10.1.1 -n ${swarm_node_number} -cn ${client_node_number}
 "

@@ -11,7 +11,6 @@ def parse_args():
     parser.add_argument('-n', '--number', type=int, required=True, help='Docker Swarm Cluter Size')
     parser.add_argument('-a', '--ip', type=str, required=True, help='Mgr IP')
     parser.add_argument('-cn', '--client-number', type=int, required=True, help='Client Cluster Size')
-    parser.add_argument('-u', '--username', type=int, required=True, help='User name')
     return parser.parse_args()
 
 install_docker = '''sudo apt-get update && \
@@ -19,11 +18,10 @@ sudo DEBIAN_FRONTEND=noninteractive apt-get -y install \
 ca-certificates curl gnupg lsb-release && \
 sudo install -m 0755 -d /etc/apt/keyrings && \
 curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg && \
-echo \"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable\" | \
+echo \deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable\ | \
 sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && \
 sudo apt-get update && \
-sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
-docker-ce docker-ce-cli containerd.io'''
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y docker-ce docker-ce-cli containerd.io'''
 install_collectl = 'sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y collectl'
 install_sysdig = 'sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y sysdig'
 clone_official_socialnetwork_repo = 'ssh-keygen -F github.com || ssh-keyscan github.com >> ~/.ssh/known_hosts && git clone https://github.com/delimitrou/DeathStarBench.git'
