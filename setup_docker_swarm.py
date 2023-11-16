@@ -76,7 +76,7 @@ with ThreadingGroup(*[f'node-{idx}' for idx in range(0, args.number)]) as swarm_
     client_grp.run('unzip RubbosClient.zip')
     client_grp.run('mv RubbosClient/elba .')
     client_grp.run('mv RubbosClient/rubbos .')
-    client_grp.run('gcc /users/XinpengW/elba/rubbos/RUBBoS/bench/flush_cache.c -o /users/XinpengW/elba/rubbos/RUBBoS/bench/flush_cache')
+    client_grp.run('gcc $HOME/elba/rubbos/RUBBoS/bench/flush_cache.c -o $HOME/elba/rubbos/RUBBoS/bench/flush_cache')
     print('** RubbosClient copied **')
 
     os.chdir(Path.home())
