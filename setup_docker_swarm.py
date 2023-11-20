@@ -75,7 +75,7 @@ with ThreadingGroup(*[f'node-{idx}' for idx in range(0, args.number)]) as swarm_
     client_grp.run('unzip RubbosClient.zip')
     client_grp.run('mv RubbosClient/elba .')
     client_grp.run('mv RubbosClient/rubbos .')
-    client_grp.run('gcc /users/Preethi/elba/rubbos/RUBBoS/bench/flush_cache.c -o /users/Preethi/elba/rubbos/RUBBoS/bench/flush_cache')
+    client_grp.run('gcc $HOME/elba/rubbos/RUBBoS/bench/flush_cache.c -o $HOME/elba/rubbos/RUBBoS/bench/flush_cache')
     print('** RubbosClient copied **')
 
     os.chdir(Path.home())
@@ -107,9 +107,10 @@ with ThreadingGroup(*[f'node-{idx}' for idx in range(0, args.number)]) as swarm_
     subprocess.run(shlex.split('sudo apt-get -y install libssl-dev libz-dev luarocks'))
     subprocess.run(shlex.split('sudo luarocks install luasocket'))
     os.chdir(Path.home()/'DeathStarBench'/'socialNetwork')
+    # TODO: check if socialNetwork is successfully deployed
     subprocess.run(shlex.split('./start.sh register'))
     subprocess.run(shlex.split('./start.sh compose'))
     print('** socialNetwork data created **')
 
     subprocess.run(shlex.split('sudo ./start.sh dedicate'))
-    print('** core dedicated **')
+    print('** core dedicated **\n** all the work is done, begin running the experiment **')

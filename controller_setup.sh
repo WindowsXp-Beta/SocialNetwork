@@ -72,4 +72,7 @@ ssh -o StrictHostKeyChecking=no -i ${private_ssh_key_path} ${username}@${control
   cd SetupScripts
   pip3 install -r requirements.txt
   python setup_docker_swarm.py -a 10.10.1.1 -n ${swarm_node_number} -cn ${client_node_number}
+  cd ~/DeathStarBench/socialNetwork
+  source set_elba_env.sh
+  ./scripts/CONTROL_exec.sh
 "
