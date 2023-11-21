@@ -7,22 +7,25 @@ cp ../scripts_limit/plotAverage.sh .
 for i in $( ls -d */ )
 do
 	cd $i
+	echo $i
 	cp ../../scripts_limit/collectlExtract.py .
 	cp ../../scripts_limit/collectlResultFilter.py .
 	cp ../../scripts_limit/collectlResultFilter2.py .
-
+	cp ../../scripts_limit/collectlProcExtract.py .
 	cp ../../scripts_limit/front_log_extract.py .
-	
 	cp ../../scripts_limit/client_log_extract.py .
 	cp ../../scripts_limit/aggregateInOutPut_ClientTier3.sh .
-	sudo apt install python2 -y
-
+	echo Copied all python scripts into $i
 	python2 collectlExtract.py
+	echo RAN collectlExtract.py
 	python2 collectlResultFilter.py
+	echo RAN collectlResultFilter.py
     python2 collectlResultFilter2.py
-	python2 collectlProcExtract.py
-	
+	echo RAN collectlResultFilter2.py
+	python2 $HOME/result/$RUBBOS_RESULTS_DIR_NAME/collectlProcExtract.py
+	echo RAN collectlProcExtract.py
 	python2 front_log_extract.py
+	echo RAN front_log_extract.py
 	
 	rm result.jtl
 	cat result*.jtl >> result.jtl
