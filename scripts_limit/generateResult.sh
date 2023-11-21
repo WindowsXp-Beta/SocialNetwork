@@ -15,17 +15,18 @@ do
 	
 	cp ../../scripts_limit/client_log_extract.py .
 	cp ../../scripts_limit/aggregateInOutPut_ClientTier3.sh .
+	sudo apt install python2
 
-	python collectlExtract.py
-	python collectlResultFilter.py
-    python collectlResultFilter2.py
-	python collectlProcExtract.py
+	python2 collectlExtract.py
+	python2 collectlResultFilter.py
+    python2 collectlResultFilter2.py
+	python2 collectlProcExtract.py
 	
-	python front_log_extract.py
+	python2 front_log_extract.py
 	
 	rm result.jtl
 	cat result*.jtl >> result.jtl
-	python client_log_extract.py
+	python2 client_log_extract.py
 	
 
 	./aggregateInOutPut_ClientTier3.sh
