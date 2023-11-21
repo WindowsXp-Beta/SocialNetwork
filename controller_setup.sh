@@ -74,11 +74,13 @@ ssh -o StrictHostKeyChecking=no -i ${private_ssh_key_path} ${username}@${control
   python setup_docker_swarm.py -a 10.10.1.1 -n ${swarm_node_number} -cn ${client_node_number}
   cd ~/DeathStarBench/socialNetwork
   source set_elba_env.sh
-  chmod +x $HOME/RubbosClient/elba/rubbos/jdk1.8.0_241
+  chmod +x $HOME/elba/rubbos/jdk1.8.0_241/bin/java
   ./scripts/CONTROL_exec.sh
-  unzip $HOME/result.zip
+  unzip $HOME/result.zip -d result/
+  cd result/
   sudo cp $HOME/scripts_limit/generateResult.sh $HOME/result/$RUBBOS_RESULTS_DIR_NAME/
-  cd $HOME/result
+  sudo chmod +x 2023-0408-WL5000-readHomeTimeline/*
+  sudo chmod +x generateResult.sh
   ./$RUBBOS_RESULTS_DIR_NAME/generateResult.sh
 "
 
