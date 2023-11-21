@@ -78,6 +78,8 @@ ssh -o StrictHostKeyChecking=no -i ${private_ssh_key_path} ${username}@${control
   ./scripts/CONTROL_exec.sh
   unzip $HOME/result.zip
   sudo cp $HOME/scripts_limit/generateResult.sh $HOME/result/$RUBBOS_RESULTS_DIR_NAME/
+  cd $HOME/result
+  ./$RUBBOS_RESULTS_DIR_NAME/generateResult.sh
 "
 
 #add unzip results.zip

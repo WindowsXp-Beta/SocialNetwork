@@ -15,7 +15,7 @@ do
 	
 	cp ../../scripts_limit/client_log_extract.py .
 	cp ../../scripts_limit/aggregateInOutPut_ClientTier3.sh .
-	sudo apt install python2
+	sudo apt install python2 -y
 
 	python2 collectlExtract.py
 	python2 collectlResultFilter.py
