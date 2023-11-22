@@ -33,7 +33,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-2.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-2.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
     command: ["ComposePostService"]
     hostname: compose-post-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -53,7 +53,7 @@ services:
       - /users/Preethi/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-2.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-2.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
 
   home-timeline-service:
     depends_on:
@@ -64,7 +64,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-0.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-0.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
     command: ["HomeTimelineService"]
     hostname: home-timeline-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -81,7 +81,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-3.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-3.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
     hostname: media-frontend
     image: yg397/media-frontend:xenial
     ports:
@@ -103,7 +103,7 @@ services:
       - "-c 4096"
     deploy:
       placement:
-        constraints: [node.hostname == node-1.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-1.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
 
   media-mongodb:
     depends_on:
@@ -118,7 +118,7 @@ services:
       - /users/Preethi/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-3.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-3.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
 
   media-service:
     depends_on:
@@ -130,7 +130,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-2.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-2.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
     command: ["MediaService"]
     hostname: media-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -147,7 +147,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-5.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-5.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
     hostname: nginx-web-server
     image: yg397/openresty-thrift:xenial
     ports:
@@ -174,7 +174,7 @@ services:
       - "-c 4096"
     deploy:
       placement:
-        constraints: [node.hostname == node-2.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-2.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
 
   post-storage-mongodb:
     depends_on:
@@ -189,7 +189,7 @@ services:
       - /users/Preethi/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-1.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-1.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
 
   post-storage-service:
     depends_on:
@@ -201,7 +201,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-1.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-1.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
     command: ["PostStorageService"]
     hostname: post-storage-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -222,7 +222,7 @@ services:
       - /users/Preethi/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-2.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-2.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
 
   social-graph-redis:
     depends_on:
@@ -236,7 +236,7 @@ services:
       - /users/Preethi/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-4.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-4.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
 
   social-graph-service:
     depends_on:
@@ -248,7 +248,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-3.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-3.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
     command: ["SocialGraphService"]
     hostname: social-graph-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -265,7 +265,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-3.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-3.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
     command: ["TextService"]
     hostname: text-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -282,7 +282,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-4.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-4.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
     command: ["UniqueIdService"]
     hostname: unique-id-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -303,7 +303,7 @@ services:
       - "-c 4096"
     deploy:
       placement:
-        constraints: [node.hostname == node-3.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-3.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
 
   url-shorten-mongodb:
     depends_on:
@@ -318,7 +318,7 @@ services:
       - /users/Preethi/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-5.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-5.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
 
   url-shorten-service:
     depends_on:
@@ -330,7 +330,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-2.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-2.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
     command: ["UrlShortenService"]
     hostname: url-shorten-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -351,7 +351,7 @@ services:
       - "-c 4096"
     deploy:
       placement:
-        constraints: [node.hostname == node-4.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-4.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
 
   user-mention-service:
     depends_on:
@@ -362,7 +362,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-2.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-2.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
     command: ["UserMentionService"]
     hostname: user-mention-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -383,7 +383,7 @@ services:
       - /users/Preethi/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-0.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-0.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
 
   user-service:
     depends_on:
@@ -395,7 +395,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-4.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-4.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
     command: ["UserService"]
     hostname: user-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -416,7 +416,7 @@ services:
       - /users/Preethi/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-4.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-4.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
 
   user-timeline-redis:
     depends_on:
@@ -430,7 +430,7 @@ services:
       - /users/Preethi/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-3.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-3.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
 
   user-timeline-service:
     depends_on:
@@ -441,7 +441,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-4.Preethi-179750.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-4.Preethi-179992.infosphere-pg0.cloudlab.umass.edu]
     command: ["UserTimelineService"]
     hostname: user-timeline-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
