@@ -61,10 +61,10 @@ scp -o StrictHostKeyChecking=no -i ${private_ssh_key_path} -r socialNetworkLSU.z
 # clone env_setup repo in manager node
 ssh -o StrictHostKeyChecking=no -i ${private_ssh_key_path} ${username}@${controller_node} "
   ssh-keygen -F github.com || ssh-keyscan github.com >> ~/.ssh/known_hosts
-  echo -e 'Host *\n\tStrictHostKeyChecking no\nHost benchmark\n\tHostName 10.10.1.7\n\tUser Preethi' >> ~/.ssh/config
+  echo -e 'Host *\n\tStrictHostKeyChecking no\nHost benchmark\n\tHostName 10.10.1.7\n\tUser ${username}' >> ~/.ssh/config
   sudo sh -c \"echo 'Host *\n\tStrictHostKeyChecking no' >> /root/.ssh/config\"
   git config --global user.email ${git_email}
-  git config --global user.name Preethi
+  git config --global user.name ${username}
   git clone git@github.com:WindowsXp-Beta/SocialNetwork.git SetupScripts
   unzip socialNetworkLSU
   sudo apt-get update
@@ -80,3 +80,4 @@ ssh -o StrictHostKeyChecking=no -i ${private_ssh_key_path} ${username}@${control
   sudo chmod +x 20*/*
   ./20*/generateResult.sh &> output.log
 "
+
