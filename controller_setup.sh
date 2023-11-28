@@ -76,6 +76,7 @@ ssh -o StrictHostKeyChecking=no -i ${private_ssh_key_path} ${username}@${control
   source set_elba_env.sh
   ./scripts/CONTROL_exec.sh
   sudo cp /users/${username}/scripts_limit/generateResult.sh /users/${username}/socialNetwork/20*/
+  sudo apt install python2
   cd /users/${username}/socialNetwork/
   sudo chmod +x 20*/*
   ./20*/generateResult.sh &> output.log
