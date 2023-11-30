@@ -3,14 +3,10 @@
 #cd $BONN_RUBBOS_RESULTS_DIR_BASE/2019-11-07T235951-0600_1414-xgu-AP400-TP150-DP60/
 
 cp ../scripts_limit/plotAverage.sh .
-sudo apt update
-curl https://bootstrap.pypa.io/pip/2.7/get-pip.py --output get-pip.py
-sudo python2 get-pip.py -y
 
 for i in $( ls -d */ )
 do
 	cd $i
-	echo $i
 	cp ../../scripts_limit/collectlExtract.py .
 	cp ../../scripts_limit/collectlResultFilter.py .
 	cp ../../scripts_limit/collectlResultFilter2.py .
