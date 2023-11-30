@@ -1230,11 +1230,11 @@ public class UserSession extends Thread
                 URL url = null;
                 String protocal = "http";
                 String hostname = rubbos.getWebServerName();
-                int port  = 8000;
+                int port  = 8080;
                 try
                 {
                         url = new URL("http", hostname, port, servletPath);
-			//url = new URL("http", hostname, servletPath);
+						//url = new URL("http", hostname, servletPath);
                 }
                 catch (java.net.MalformedURLException e)
                 {
