@@ -14,10 +14,11 @@
 [Download Zip File](https://filestogeaux.lsu.edu/public/download.php?FILE=xgu5/12038F6iKmz)
 2. Add JDK files to these paths in the project directory- '/RubbosClient/elba/rubbos/jdk1.8.0_241', '/RubbosClient/rubbos/jdk-8u241-linux-x64.tar.gz'.
 3. Make sure SocialNetwork/RubbosClient/elba/rubbos/jdk1.8.0_241/bin has executable permission, if not run `chmod +x SocialNetwork/RubbosClient/elba/rubbos/jdk1.8.0_241/bin/java`
-4. Change hostname in `docker-compose-swarm.yml`.
+4. Populate `config/config.json` with your values. Instructions:
 hostname format is `node-{idx}.{experiment_name}.infosphere-pg0.{ssh-host without the first varying part}`.
-> The experiment name's format is `username-number`, e.g. XinpengW-177986
-> for ssh-host, suppose a host is `apt186.apt.emulab.net`, then we pick the latter three parts without the first varying one
+> You can get the experiment name from cloudlab the format is `username-number`, e.g. XinpengW-177986
+> for ssh-host, suppose a host is `apt186.apt.emulab.net`, then we pick the latter three parts without the first varying one.
+> Username would be your cloudlab usernane, for example: Preethi
 5. Delete existing zip to obtain new data.
 
 ## RUBBoS Properties
