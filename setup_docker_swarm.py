@@ -91,6 +91,7 @@ with ThreadingGroup(*[f'node-{idx}' for idx in range(0, args.number)]) as swarm_
     os.chdir(Path.home())
     subprocess.run('mv socialNetwork/* DeathStarBench/socialNetwork/', shell=True)
     subprocess.run('mv socialNetwork/scripts/*.sh DeathStarBench/socialNetwork/scripts/', shell=True)
+    subprocess.run(shlex.split('rm -r socialNetwork/scripts'))
     os.chdir(Path.home()/'DeathStarBench'/'socialNetwork')
     subprocess.run(shlex.split('sudo ./start.sh start'))
     print('** socialNetwork stack deployed **')
