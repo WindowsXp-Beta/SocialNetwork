@@ -11,7 +11,6 @@ pip2 install numpy
 for i in $( ls -d */ )
 do
 	cd $i
-	echo $i
 	cp ../../scripts_limit/collectlExtract.py .
 	cp ../../scripts_limit/collectlResultFilter.py .
 	cp ../../scripts_limit/collectlResultFilter2.py .
