@@ -65,10 +65,11 @@ ssh -o StrictHostKeyChecking=no -i ${private_ssh_key_path} ${username}@${control
   sudo sh -c \"echo 'Host *\n\tStrictHostKeyChecking no' >> /root/.ssh/config\"
   git config --global user.email ${git_email}
   git config --global user.name ${username}
+  git config --global core.editor "vim"
   git clone git@github.com:WindowsXp-Beta/SocialNetwork.git SetupScripts
   unzip socialNetworkLSU
   sudo apt-get update
-  sudo apt-get install -y python3-pip maven
+  sudo apt-get install -y python3-pip maven pdfgrep
   cd SetupScripts
   pip3 install -r requirements.txt
   python setup_docker_swarm.py -a 10.10.1.1 -n ${swarm_node_number} -cn ${client_node_number}
@@ -78,7 +79,6 @@ ssh -o StrictHostKeyChecking=no -i ${private_ssh_key_path} ${username}@${control
   sudo cp /users/${username}/scripts_limit/generateResult.sh /users/${username}/socialNetwork/20*/
   sudo apt install -y python2
   cd /users/${username}/socialNetwork/
-  sudo chmod +x 20*/*
   ./20*/generateResult.sh &> output.log
 "
 

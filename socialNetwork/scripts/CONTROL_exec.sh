@@ -43,7 +43,6 @@ do
     ssh node-0 "$WORK_HOME/scripts/collectlMonitor.sh"
 
 
-
     sleep 10
     ./log_time.sh
     ./rubbos-servletsBO.sh
@@ -59,10 +58,10 @@ do
     scp -r node-0:/tmp/*.raw.gz ./
     scp -r node-0:/tmp/log* ./
     scp -r node-0:/tmp/node*.log ./
+    cp $RUBBOS_HOME/bench/20*/index.html ./
 
     scp node-6:$HOME/node6_sysdig.log ./
     scp node-0:$WORK_HOME/set_elba_env.sh ./
-
 
 
     sleep 2

@@ -1,6 +1,6 @@
 from __future__ import generators # needed for Python
 import sys
-import os, stat, types, re, time, math, csv, string,commands
+import os, stat, types, re, time, math, csv, string, commands
 
 #path = 'D:\\opentaps-1.0.0-common_tables\\opentaps-1.0.0\\applications\\ecommerce'
 #path = 'D:\\workspace/SysVizResultAnalysis/src/datapreparation'
@@ -49,21 +49,21 @@ def processLogBO(startPatternStr):
     str_list.insert(14,":")
     endtime_new = ''.join(str_list)
     #print endtime_new
-    
+
     print makeHTMLpage(top, startPatternStr)
 
     LogFileBO.sort(cmp=None, key=None, reverse=False)
     for file in LogFileBO:
         print '**************************' + file + '******************'
-        
-        localPath = os.path.dirname(file)       
+
+        localPath = os.path.dirname(file)
         ##get the starting time and ending time of runtime experiments
         stime_epoch = 0.0
         etime_epoch = 0.0
         totalPowerUsage = 0.0
         powerRecordCounter = 0
-    
-        ##extract power data at runtime period  
+
+        ##extract power data at runtime period
         (dirName, fileName) = os.path.split(file)
         (ShortName, Extension) = os.path.splitext(fileName)
         #collectLTimeFormatStart = "20200209:14:17:31"
@@ -74,29 +74,28 @@ def processLogBO(startPatternStr):
         print 'dirName '+str(dirName)
         print 'collectlTimeFormStart ' + str(collectLTimeFormatStart)
         print "collectlTimeFormEnd " + str(collectLTimeFormatEnd)
-        #results = commands.getstatusoutput("collectl -sCdn -p %s  -P -f %s -oUmz --from %s-%s" % (file,dirName,collectLTimeFormatStart,collectLTimeFormatEnd))         
-   	#results = commands.getstatusoutput("rm %s/VM*_collectl_*.csv" % (dirName))         
-   	#results = commands.getstatusoutput("rm %s/VM*.tab" % (dirName))         
-   	results = commands.getstatusoutput("collectl -sCcdnms -p %s  -P -f %s -oUmz --from %s-%s" % (file,dirName,collectLTimeFormatStart,collectLTimeFormatEnd))  # add by shungeng
-        results = commands.getstatusoutput("collectl -sZ -p %s  -P -f %s -oTmza --from %s-%s" % (file,dirName,collectLTimeFormatStart,collectLTimeFormatEnd))
+        #results = commands.getstatusoutput("collectl -sCdn -p %s  -P -f %s -oUmz --from %s-%s" % (file,dirName,collectLTimeFormatStart,collectLTimeFormatEnd))
+        #results = commands.getstatusoutput("rm %s/VM*_collectl_*.csv" % (dirName))
+        #results = commands.getstatusoutput("rm %s/VM*.tab" % (dirName))
+        results = commands.getstatusoutput("collectl -sCcdnmsZ -p %s  -P -f %s -oUmz --from %s-%s" % (file,dirName,collectLTimeFormatStart,collectLTimeFormatEnd))  # add by shungeng
+        # results = commands.getstatusoutput("collectl -sZ -p %s  -P -f %s -oTmza --from %s-%s" % (file,dirName,collectLTimeFormatStart,collectLTimeFormatEnd))
         print results
         if results[0] != 0:
-	    print "code: %s  failure to execute the commond: collectl -sCdnZ -p %s  -P -f %s -oUmz --from %s-%s" % (results[0], file,dirName,collectLTimeFormatStart,collectLTimeFormatEnd)
+            print "code: %s  failure to execute the commond: collectl -sCdnZ -p %s  -P -f %s -oUmz --from %s-%s" % (results[0], file,dirName,collectLTimeFormatStart,collectLTimeFormatEnd)
             sys.exit(0)
         #results1 = commands.getstatusoutput("collectl -sZ -p %s  -P -f %s -oUmz --from %s-%s" % (file,dirName,collectLTimeFormatStart,collectLTimeFormatEnd))  # add by shungeng
         #print results1
         #if results1[0] != 0:
         #    print "code: %s  failure to execute the commond: collectl -sZ -p %s  -P -f %s -oUmz --from %s-%s" % (results[0], file,dirName,collectLTimeFormatStart,collectLTimeFormatEnd)
         #    sys.exit(0)
-	 
+
 def my_split(s, seps):
     res = [s]
     for sep in seps:
         s, res = res, []
         for seq in s:
             res += seq.split(sep)
-    return res  
-
+    return res
 
 
 def walktree(top, depthfirst=True):
@@ -118,7 +117,6 @@ def walktree(top, depthfirst=True):
 def makeHTMLtable(top,strPattern, depthfirst=False):
     for top, names in walktree(top):
         for name in names:
-#           print name
             (ShortName, Extension) = os.path.splitext(name)
             if (ShortName.startswith(strPattern) and 'raw' in ShortName and 'gz' in Extension):
                 print top;
@@ -129,16 +127,9 @@ def makeHTMLpage(top, strPattern, depthfirst=False):
     return makeHTMLtable(top,strPattern, depthfirst)
 
 
-
-
-
 if __name__ == '__main__':
     if len(sys.argv) == 2:
         top = sys.argv[1]
     else: top = path
 
-
-    #processLogBO_processInfo()
     processLogBO('node');
-
-
