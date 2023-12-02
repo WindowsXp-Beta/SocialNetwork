@@ -1,0 +1,499 @@
+version: "3.8"
+
+services:
+  jaeger-agent:
+    image: jaegertracing/jaeger-agent:latest
+    hostname: jaeger-agent
+    command: ["--reporter.grpc.host-port=jaeger-collector:14250"]
+    ports:
+      - target: 6831
+        published: 6831
+        protocol: udp
+        mode: host
+    #   - target: 5778
+    #     published: 5778
+    #     protocol: tcp
+    #     mode: host
+    #   - target: 14271
+    #     published: 14271
+    #     protocol: tcp
+    #     mode: host
+    deploy:
+      restart_policy:
+        condition: any
+    depends_on:
+      - jaeger-collector
+
+  compose-post-service:
+    depends_on:
+      - jaeger-agent
+      - jaeger-query
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      placement:
+        constraints: [node.hostname == node-2.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+    command: ["ComposePostService"]
+    hostname: compose-post-service
+    image: 127.0.0.1:5000/social-network-microservices:withLog_01
+    volumes:
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
+
+  home-timeline-redis:
+    depends_on:
+      - jaeger-agent
+      - jaeger-query
+    hostname: home-timeline-redis
+    image: redis
+    command: "redis-server /social-network-microservices/config/redis.conf"
+    volumes:
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
+    deploy:
+      placement:
+        constraints: [node.hostname == node-2.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+
+  home-timeline-service:
+    depends_on:
+      - jaeger-agent
+      - jaeger-query
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      placement:
+        constraints: [node.hostname == node-0.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+    command: ["HomeTimelineService"]
+    hostname: home-timeline-service
+    image: 127.0.0.1:5000/social-network-microservices:withLog_01
+    volumes:
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
+
+  media-frontend:
+    depends_on:
+      - jaeger-agent
+      - jaeger-query
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      placement:
+        constraints: [node.hostname == node-3.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+    hostname: media-frontend
+    image: yg397/media-frontend:xenial
+    ports:
+      - 8081:8080
+    volumes:
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/media-frontend/lua-scripts:/usr/local/openresty/nginx/lua-scripts
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/media-frontend/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+
+  media-memcached:
+    depends_on:
+      - jaeger-agent
+      - jaeger-query
+    hostname: media-memcached
+    image: memcached
+    command:
+      - "-m 16384"
+      - "-t 8"
+      - "-I 32m"
+      - "-c 4096"
+    deploy:
+      placement:
+        constraints: [node.hostname == node-1.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+
+  media-mongodb:
+    depends_on:
+      - jaeger-agent
+      - jaeger-query
+    hostname: media-mongodb
+    image: mongo:4.4.6
+    command: "mongod --nojournal --quiet --config /social-network-microservices/config/mongod.conf"
+    # command: "mongod --serviceExecutor adaptive --listenBacklog 1024 --syncdelay 3600 --wiredTigerCacheSizeGB 2"
+    volumes:
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
+    deploy:
+      placement:
+        constraints: [node.hostname == node-3.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+
+  media-service:
+    depends_on:
+      - media-mongodb
+      - jaeger-agent
+      - jaeger-query
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      placement:
+        constraints: [node.hostname == node-2.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+    command: ["MediaService"]
+    hostname: media-service
+    image: 127.0.0.1:5000/social-network-microservices:withLog_01
+    volumes:
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
+
+  nginx-web-server:
+    depends_on:
+      - jaeger-agent
+      - jaeger-query
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      placement:
+        constraints: [node.hostname == node-5.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+    hostname: nginx-web-server
+    image: yg397/openresty-thrift:xenial
+    ports:
+      - 8080:8080
+    volumes:
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/nginx-web-server/lua-scripts:/usr/local/openresty/nginx/lua-scripts
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/nginx-web-server/pages:/usr/local/openresty/nginx/pages
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/nginx-web-server/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/nginx-web-server/jaeger-config.json:/usr/local/openresty/nginx/jaeger-config.json
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/gen-lua:/gen-lua
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/docker/openresty-thrift/lua-thrift:/usr/local/openresty/lualib/thrift
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
+
+  post-storage-memcached:
+    depends_on:
+      - jaeger-agent
+      - jaeger-query
+    hostname: post-storage-memcached
+    image: memcached
+    command:
+      - "-m 16384"
+      - "-t 8"
+      - "-I 32m"
+      - "-c 4096"
+    deploy:
+      placement:
+        constraints: [node.hostname == node-2.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+
+  post-storage-mongodb:
+    depends_on:
+      - jaeger-agent
+      - jaeger-query
+    hostname: post-storage-mongodb
+    image: mongo:4.4.6
+    command: "mongod --nojournal --quiet --config /social-network-microservices/config/mongod.conf"
+    # command: "mongod --serviceExecutor adaptive --listenBacklog 1024 --syncdelay 3600 --wiredTigerCacheSizeGB 75"
+    volumes:
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
+    deploy:
+      placement:
+        constraints: [node.hostname == node-1.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+
+  post-storage-service:
+    depends_on:
+      - post-storage-mongodb
+      - jaeger-agent
+      - jaeger-query
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      placement:
+        constraints: [node.hostname == node-1.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+    command: ["PostStorageService"]
+    hostname: post-storage-service
+    image: 127.0.0.1:5000/social-network-microservices:withLog_01
+    volumes:
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
+
+  social-graph-mongodb:
+    depends_on:
+      - jaeger-agent
+      - jaeger-query
+    hostname: social-graph-mongodb
+    image: mongo:4.4.6
+    command: "mongod --nojournal --quiet --config /social-network-microservices/config/mongod.conf"
+    # command: "mongod --serviceExecutor adaptive --listenBacklog 1024 --syncdelay 3600 --wiredTigerCacheSizeGB 16"
+    volumes:
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
+    deploy:
+      placement:
+        constraints: [node.hostname == node-2.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+
+  social-graph-redis:
+    depends_on:
+      - jaeger-agent
+      - jaeger-query
+    hostname: social-graph-redis
+    image: redis
+    command: "redis-server /social-network-microservices/config/redis.conf"
+    volumes:
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
+    deploy:
+      placement:
+        constraints: [node.hostname == node-4.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+
+  social-graph-service:
+    depends_on:
+      - jaeger-agent
+      - jaeger-query
+      - social-graph-mongodb
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      placement:
+        constraints: [node.hostname == node-3.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+    command: ["SocialGraphService"]
+    hostname: social-graph-service
+    image: 127.0.0.1:5000/social-network-microservices:withLog_01
+    volumes:
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
+
+  text-service:
+    depends_on:
+      - jaeger-agent
+      - jaeger-query
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      placement:
+        constraints: [node.hostname == node-3.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+    command: ["TextService"]
+    hostname: text-service
+    image: 127.0.0.1:5000/social-network-microservices:withLog_01
+    volumes:
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
+
+  unique-id-service:
+    depends_on:
+      - jaeger-agent
+      - jaeger-query
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      placement:
+        constraints: [node.hostname == node-4.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+    command: ["UniqueIdService"]
+    hostname: unique-id-service
+    image: 127.0.0.1:5000/social-network-microservices:withLog_01
+    volumes:
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
+
+  url-shorten-memcached:
+    depends_on:
+      - jaeger-agent
+      - jaeger-query
+    hostname: url-shorten-memcached
+    image: memcached
+    command:
+      - "-m 16384"
+      - "-t 8"
+      - "-I 32m"
+      - "-c 4096"
+    deploy:
+      placement:
+        constraints: [node.hostname == node-3.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+
+  url-shorten-mongodb:
+    depends_on:
+      - jaeger-agent
+      - jaeger-query
+    hostname: url-shorten-mongodb
+    image: mongo:4.4.6
+    command: "mongod --nojournal --quiet --config /social-network-microservices/config/mongod.conf"
+    # command: "mongod --serviceExecutor adaptive --listenBacklog 1024 --syncdelay 3600 --wiredTigerCacheSizeGB 36"
+    volumes:
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
+    deploy:
+      placement:
+        constraints: [node.hostname == node-5.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+
+  url-shorten-service:
+    depends_on:
+      - url-shorten-mongodb
+      - jaeger-agent
+      - jaeger-query
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      placement:
+        constraints: [node.hostname == node-2.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+    command: ["UrlShortenService"]
+    hostname: url-shorten-service
+    image: 127.0.0.1:5000/social-network-microservices:withLog_01
+    volumes:
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
+
+  user-memcached:
+    depends_on:
+      - jaeger-agent
+      - jaeger-query
+    hostname: user-memcached
+    image: memcached
+    command:
+      - "-m 16384"
+      - "-t 8"
+      - "-I 32m"
+      - "-c 4096"
+    deploy:
+      placement:
+        constraints: [node.hostname == node-4.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+
+  user-mention-service:
+    depends_on:
+      - jaeger-agent
+      - jaeger-query
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      placement:
+        constraints: [node.hostname == node-2.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+    command: ["UserMentionService"]
+    hostname: user-mention-service
+    image: 127.0.0.1:5000/social-network-microservices:withLog_01
+    volumes:
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
+
+  user-mongodb:
+    depends_on:
+      - jaeger-agent
+      - jaeger-query
+    hostname: user-mongodb
+    image: mongo:4.4.6
+    command: "mongod --nojournal --quiet --config /social-network-microservices/config/mongod.conf"
+    # command: "mongod --serviceExecutor adaptive --listenBacklog 1024 --syncdelay 3600 --wiredTigerCacheSizeGB 8"
+    volumes:
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
+    deploy:
+      placement:
+        constraints: [node.hostname == node-0.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+
+  user-service:
+    depends_on:
+      - user-mongodb
+      - jaeger-agent
+      - jaeger-query
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      placement:
+        constraints: [node.hostname == node-4.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+    command: ["UserService"]
+    hostname: user-service
+    image: 127.0.0.1:5000/social-network-microservices:withLog_01
+    volumes:
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
+
+  user-timeline-mongodb:
+    depends_on:
+      - jaeger-agent
+      - jaeger-query
+    hostname: user-timeline-mongodb
+    image: mongo:4.4.6
+    command: "mongod --nojournal --quiet --config /social-network-microservices/config/mongod.conf"
+    # command: "mongod --serviceExecutor adaptive --listenBacklog 1024 --syncdelay 3600 --wiredTigerCacheSizeGB 75"
+    volumes:
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
+    deploy:
+      placement:
+        constraints: [node.hostname == node-4.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+
+  user-timeline-redis:
+    depends_on:
+      - jaeger-agent
+      - jaeger-query
+    hostname: user-timeline-redis
+    image: redis
+    command: "redis-server /social-network-microservices/config/redis.conf"
+    volumes:
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
+    deploy:
+      placement:
+        constraints: [node.hostname == node-3.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+
+  user-timeline-service:
+    depends_on:
+      - user-timeline-mongodb
+      - jaeger-agent
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+      placement:
+        constraints: [node.hostname == node-4.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+    command: ["UserTimelineService"]
+    hostname: user-timeline-service
+    image: 127.0.0.1:5000/social-network-microservices:withLog_01
+    volumes:
+      - /users/<<USERNAME>>/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+
+  jaeger-collector:
+    image: jaegertracing/jaeger-collector
+    command:
+      [
+        "--cassandra.keyspace=jaeger_v1_dc1",
+        "--cassandra.servers=cassandra",
+        "--collector.zipkin.host-port=9411",
+        "--collector.num-workers=100",
+        "--collector.queue-size=100000"
+      ]
+    ports:
+      - "14269:14269"
+    deploy:
+      restart_policy:
+        condition: any
+    depends_on:
+      - cassandra-schema
+
+  jaeger-query:
+    image: jaegertracing/jaeger-query
+    command:
+      ["--cassandra.keyspace=jaeger_v1_dc1", "--cassandra.servers=cassandra"]
+    ports:
+      - "16686:16686"
+    deploy:
+      restart_policy:
+        condition: any
+    depends_on:
+      - cassandra-schema
+
+  cassandra-schema:
+    image: jaegertracing/jaeger-cassandra-schema
+    deploy:
+      restart_policy:
+        condition: on-failure
+    depends_on:
+      - cassandra
+
+  cassandra:
+    image: cassandra:3.9
+    deploy:
+
+networks:
+  default:
+    driver: overlay
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.11.0.0/16

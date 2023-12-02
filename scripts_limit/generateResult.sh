@@ -27,8 +27,9 @@ do
 	echo RAN collectlResultFilter2.py
 	python2 collectlProcExtract.py
 	echo RAN collectlProcExtract.py
-	python2 front_log_extract.py
-	echo RAN front_log_extract.py
+	# We don't need to run front_log_extract.py because we don't have sysdig logs
+	# python2 front_log_extract.py
+	# echo RAN front_log_extract.py
 
 	rm result.jtl
 	cat result*.jtl >> result.jtl

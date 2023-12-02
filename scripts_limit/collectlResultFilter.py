@@ -6,10 +6,7 @@ path = os.getcwd()
 
 print '******************current path****************'
 print path
-#print path
-#pdb.set_trace()
 
-print path
 
 global LogFileRW
 global LogFileBO
@@ -34,10 +31,7 @@ def processLogBO(startPatternStr):
     for file in LogFileBO:
         print '**************************' + file + '******************'
 
-        localPath = os.path.dirname(file)
-
         ##get the number of clients in this experiment
-        localPath = os.path.dirname(file)
         ##extract collectl CPU data at runtime period
         (dirName, fileName) = os.path.split(file)
         (ShortName, Extension) = os.path.splitext(fileName)
@@ -97,8 +91,9 @@ def makeHTMLpage(top, strPattern, depthfirst=False):
 if __name__ == '__main__':
     if len(sys.argv) == 2:
         top = sys.argv[1]
-    else: top = path
+    else:
+        top = path
 
 
     #processLogBO_processInfo()
-    processLogBO('node');
+    processLogBO('node')
