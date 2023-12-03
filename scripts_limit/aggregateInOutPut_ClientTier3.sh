@@ -7,7 +7,7 @@ cp ../../scripts_limit/detailRT_fig3.gnuplot ./
 cp ../../scripts_limit/histgramPlot.gnuplot ./
 cp ../../scripts_limit/RT_dist_extract.py ./
 cp ../../scripts_limit/RT_dist.gnuplot ./
-cp ../../scripts_limit/plotPID.gnuplot ./
+# cp ../../scripts_limit/plotPID.gnuplot ./
 
 cp ../../scripts_limit/RT_Q_conn.gnuplot ./
 cp ../../scripts_limit/RT_Q_components.gnuplot ./
@@ -40,15 +40,15 @@ printf "\tconcurrency: %s\n" "$concurrency"
 
 
 # do the real work
-python ./aggregateInOutPut_ClientTier_ALL.py $timeSpan $startTime $endTime $concurrency $file "detailRT-client"
-python ./aggregateInOutPut_ClientTier_ExcludeLongReq1.py $timeSpan $startTime $endTime $concurrency $file "detailRT-client"
-python ./aggregateInOutPut_ClientTier_LongReq1.py $timeSpan $startTime $endTime $concurrency $file "detailRT-client"
+python2 ./aggregateInOutPut_ClientTier_ALL.py $timeSpan $startTime $endTime $concurrency $file "detailRT-client"
+python2 ./aggregateInOutPut_ClientTier_ExcludeLongReq1.py $timeSpan $startTime $endTime $concurrency $file "detailRT-client"
+python2 ./aggregateInOutPut_ClientTier_LongReq1.py $timeSpan $startTime $endTime $concurrency $file "detailRT-client"
 
-python ./aggregateInOutPut_ClientTier_ALL.py $timeSpan $startTime $endTime $concurrency "front_req.csv" "detailRT-front"
-python ./aggregateInOutPut_ClientTier_ExcludeLongReq1.py $timeSpan $startTime $endTime $concurrency "front_req.csv" "detailRT-front"
-python ./aggregateInOutPut_ClientTier_LongReq1.py $timeSpan $startTime $endTime $concurrency "front_req.csv" "detailRT-front"
+python2 ./aggregateInOutPut_ClientTier_ALL.py $timeSpan $startTime $endTime $concurrency "front_req.csv" "detailRT-front"
+python2 ./aggregateInOutPut_ClientTier_ExcludeLongReq1.py $timeSpan $startTime $endTime $concurrency "front_req.csv" "detailRT-front"
+python2 ./aggregateInOutPut_ClientTier_LongReq1.py $timeSpan $startTime $endTime $concurrency "front_req.csv" "detailRT-front"
 
-python RT_dist_extract.py
+python2 RT_dist_extract.py
 
 # gnuplot
 title_name="***WL"$concurrency"***"

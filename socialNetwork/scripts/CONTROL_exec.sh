@@ -21,7 +21,7 @@ do
   scp $WORK_HOME/runtime_files/$i benchmark:$RUBBOS_HOME/Client/rubbos.properties
 
   # get HTTP request latency
-  ssh node-6 "rm -f $HOME/node6_sysdig.log; sudo sysdig -c httplog > $HOME/node6_sysdig.log &" &
+  # ssh node-6 "rm -f $HOME/node6_sysdig.log; sudo sysdig -c httplog > $HOME/node6_sysdig.log &" &
 
   # Browsing Only
   echo "Start Browsing Only with $i"
@@ -43,7 +43,6 @@ do
     ssh node-0 "$WORK_HOME/scripts/collectlMonitor.sh"
 
 
-
     sleep 10
     ./log_time.sh
     ./rubbos-servletsBO.sh
@@ -54,15 +53,16 @@ do
     cd $TMP_RESULTS_DIR_BASE/20*
 
     ssh node-0 "$WORK_HOME/scripts/endCollectl.sh"
-    ssh node-0 "$WORK_HOME/scripts/endSysdig.sh"
+    # ssh node-0 "$WORK_HOME/scripts/endSysdig.sh"
     ssh node-0 "$WORK_HOME/scripts/getLogs.sh"
     scp -r node-0:/tmp/*.raw.gz ./
     scp -r node-0:/tmp/log* ./
     scp -r node-0:/tmp/node*.log ./
+    cp $RUBBOS_HOME/bench/20*/index.html ./
+    cp $RUBBOS_HOME/bench/20*/result*.jtl ./
 
     scp node-6:$HOME/node6_sysdig.log ./
     scp node-0:$WORK_HOME/set_elba_env.sh ./
-
 
 
     sleep 2

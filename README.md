@@ -1,3 +1,32 @@
+# Cloudlab Setup Guide
+
+## Instantiating an experiment
+1. Check resource availability for a Bare Metal machine with 12 free resources, example: rs620, r350.
+2. Edit code in `profile.py`.
+3. Create a profile using the file at 'cloudlab/profile.py'. Modify the hardware type and node count(12) based on the available resource.
+4. Click "Accept".
+5. Save changes.
+6. Click "Instantiate".
+7. Wait for it to come up.
+
+## Downloading Zip File
+1. Please download the zip file using the following link:
+[Download Zip File](https://filestogeaux.lsu.edu/public/download.php?FILE=xgu5/12038F6iKmz)
+2. Add JDK files to these paths in the project directory- '/RubbosClient/elba/rubbos/jdk1.8.0_241', '/RubbosClient/rubbos/jdk-8u241-linux-x64.tar.gz'.
+3. Make sure SocialNetwork/RubbosClient/elba/rubbos/jdk1.8.0_241/bin has executable permission, if not run `chmod +x SocialNetwork/RubbosClient/elba/rubbos/jdk1.8.0_241/bin/java`
+4. Populate `config/config.json` with your values. Instructions:
+hostname format is `node-{idx}.{experiment_name}.infosphere-pg0.{ssh-host without the first varying part}`.
+> You can get the experiment name from cloudlab the format is `username-number`, e.g. XinpengW-177986
+> for ssh-host, suppose a host is `apt186.apt.emulab.net`, then we pick the latter three parts without the first varying one.
+> Username would be your cloudlab usernane, for example: Preethi
+5. Delete existing zip to obtain new data.
+
+## RUBBoS Properties
+Fix hardcoded paths in socialNetwork/runtime_files/rubbos.properties_100 properties to your paths.
+
+## Running Controller Setup Script
+Run the Controller setup script. The command might resemble the following:
+
 ```bash
 ./controller_setup.sh \
 --username XinpengW \
@@ -8,9 +37,13 @@
 --client_node_number 5
 ```
 
-hostname format is `node-{idx}.{experiment_name}.infosphere-pg0.{ssh-host without the first varying part}`.
-> The experiment name's format is `username-number`, e.g. XinpengW-177986
-> for ssh-host, suppose a host is `apt186.apt.emulab.net`, then we pick the latter three parts without the first varying one
+## Debugging in VS Code help
+1. Click on the >< symbol in the left bottom corner.
+2. Connect to host > Add New SSH Host > Enter SSH Connection command to the controller node - node-0. You can get this from Cloudlab's Experiment List View page too. It would look something like `ssh Preethi@apt183.apt.emulab.net.` 
+3. If your ssh key is not the one in the default location, edit config > Open config > Add IdentityFile path /custom/path/id_rsa under the host details.
+4. To copy missing files from local machine- scp -o StrictHostKeyChecking=no -i(optional)"/custom/path/id_rsa"  /source/file/path hostname:/destination/path.
+5. To access another node(node-6 for example) from node-0, just type `ssh node-6` from node-0's terminal.
+
 
 # Original README
 ## Preliminary

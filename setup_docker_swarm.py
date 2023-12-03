@@ -21,8 +21,7 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o 
 echo \"deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable\" | \
 sudo tee /etc/apt/sources.list.d/docker.list > /dev/null && \
 sudo apt-get update && \
-sudo DEBIAN_FRONTEND=noninteractive apt-get install -y \
-docker-ce docker-ce-cli containerd.io'''
+sudo DEBIAN_FRONTEND=noninteractive apt-get install -y docker-ce docker-ce-cli containerd.io'''
 install_collectl = 'sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y collectl'
 install_sysdig = 'sudo apt-get update && sudo DEBIAN_FRONTEND=noninteractive apt-get install -y sysdig'
 clone_official_socialnetwork_repo = 'ssh-keygen -F github.com || ssh-keyscan github.com >> ~/.ssh/known_hosts && git clone https://github.com/delimitrou/DeathStarBench.git'
@@ -92,6 +91,7 @@ with ThreadingGroup(*[f'node-{idx}' for idx in range(0, args.number)]) as swarm_
     os.chdir(Path.home())
     subprocess.run('mv socialNetwork/* DeathStarBench/socialNetwork/', shell=True)
     subprocess.run('mv socialNetwork/scripts/*.sh DeathStarBench/socialNetwork/scripts/', shell=True)
+    subprocess.run(shlex.split('rm -r socialNetwork/scripts'))
     os.chdir(Path.home()/'DeathStarBench'/'socialNetwork')
     subprocess.run(shlex.split('sudo ./start.sh start'))
     print('** socialNetwork stack deployed **')

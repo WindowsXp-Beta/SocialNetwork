@@ -13,6 +13,6 @@ do
 	#echo $i
 	ssh $i '
 	hostname
-	collectl -i 0.1 -F30 -sCdn -oTm  -f /tmp &> /dev/null & 
+	collectl -i 0.1 -F30 -sCdnZ -oTm  -f /tmp &> /dev/null &
 	'
 done
