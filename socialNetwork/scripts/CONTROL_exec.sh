@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# ssh attacker "
-#   mkdir -p $RUBBOS_RESULTS_DIR_BASE
-# "
+ssh node-0 "
+  mkdir -p $RUBBOS_RESULTS_DIR_BASE
+"
+
 ssh benchmark "
   source $HOME/rubbos/set_elba_env.sh
   mkdir -p $TMP_RESULTS_DIR_BASE/$RUBBOS_RESULTS_DIR_NAME
@@ -10,7 +11,7 @@ ssh benchmark "
 "
 
 # Trying to simulation 5000 users
-for i in "rubbos.properties_100"
+for i in "rubbos.properties_1000"
 do
 
   ssh benchmark "
@@ -31,7 +32,7 @@ do
   ssh benchmark "
     source $HOME/rubbos/set_elba_env.sh
     cd $RUBBOS_HOME/bench
-    # \rm -r 20*
+    \rm -r 20*
     # \rm -r $TMP_RESULTS_DIR_BASE/20*/
 
     # Execute benchmark
@@ -49,8 +50,8 @@ do
     # Collect results
     ./log_time.sh
     echo "The benchmark has finished. Now, collecting results..."
-    mv Experiments_timestamp.log $TMP_RESULTS_DIR_BASE/20*/
-    cd $TMP_RESULTS_DIR_BASE/20*
+    mv Experiments_timestamp.log 20*/
+    cd 20*
 
     ssh node-0 "$WORK_HOME/scripts/endCollectl.sh"
     # ssh node-0 "$WORK_HOME/scripts/endSysdig.sh"
@@ -61,14 +62,14 @@ do
     cp $RUBBOS_HOME/bench/20*/index.html ./
     cp $RUBBOS_HOME/bench/20*/result*.jtl ./
 
-    scp node-6:$HOME/node6_sysdig.log ./
+    # scp node-6:$HOME/node6_sysdig.log ./
     scp node-0:$WORK_HOME/set_elba_env.sh ./
 
 
     sleep 2
 
     cd ..
-    # mv 20* $TMP_RESULTS_DIR_BASE/$RUBBOS_RESULTS_DIR_NAME/
+    mv 20* $TMP_RESULTS_DIR_BASE/$RUBBOS_RESULTS_DIR_NAME/
     scp -r $TMP_RESULTS_DIR_BASE/$RUBBOS_RESULTS_DIR_NAME $RUBBOS_RESULTS_HOST:$BONN_RUBBOS_RESULTS_DIR_BASE
   "
 

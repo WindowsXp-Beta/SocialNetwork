@@ -1,6 +1,5 @@
 {
-    "username": "Preethi",
-    "experiment_name": "Preethi-180841", 
-    "ssh_host": "apt.emulab.net"
+    "username": "$your_cloud_lab_username",
+    "experiment_name": "$username-six_digit_number",
+    "ssh_host": "cloudlab.umass.edu"
 }
-  

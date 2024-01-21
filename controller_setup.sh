@@ -89,7 +89,7 @@ ssh -o StrictHostKeyChecking=no -i ${private_ssh_key_path} ${username}@${control
   git config --global user.email ${git_email}
   git config --global user.name ${username}
   git config --global core.editor "vim"
-  git clone -b preethi-add-doc git@github.com:WindowsXp-Beta/SocialNetwork.git SetupScripts
+  git clone git@github.com:WindowsXp-Beta/SocialNetwork.git SetupScripts
   unzip socialNetworkLSU
   sudo apt-get update
   sudo apt-get install -y python3-pip maven pdfgrep
@@ -99,9 +99,9 @@ ssh -o StrictHostKeyChecking=no -i ${private_ssh_key_path} ${username}@${control
   cd ~/DeathStarBench/socialNetwork
   source set_elba_env.sh
   ./scripts/CONTROL_exec.sh
-  sudo cp /users/${username}/scripts_limit/generateResult.sh /users/${username}/socialNetwork/20*/
+  sudo cp /users/${username}/scripts_limit/generateResult.sh /users/${username}/socialNetwork/
   sudo apt install -y python2
   cd /users/${username}/socialNetwork/
-  ./20*/generateResult.sh &> output.log
+  ./generateResult.sh &> output.log
 "
 
