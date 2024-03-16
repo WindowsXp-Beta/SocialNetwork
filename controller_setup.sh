@@ -26,7 +26,7 @@ python config/config.py
 if [ ! -e "socialNetworkLSU.zip" ]
 then
   echo -e "Don't have socialNetwork zip file in the path\nzip them now"
-  for f in "RubbosClient" "RubbosClient_src" "scripts_limit" "socialNetwork" "src"; do
+  for f in "RubbosClient" "RubbosClient_src" "scripts_limit" "socialNetwork" "src" "internal_triggers"; do
     zip -r "$f.zip" $f -x '**/.DS_Store' -x '**/__MACOSX'
   done
   zip -r socialNetworkLSU.zip *.zip -x '**/.*' -x '**/__MACOSX'
@@ -102,6 +102,5 @@ ssh -o StrictHostKeyChecking=no -i ${private_ssh_key_path} ${username}@${control
   sudo cp /users/${username}/scripts_limit/generateResult.sh /users/${username}/socialNetwork/
   sudo apt install -y python2
   cd /users/${username}/socialNetwork/
-  ./generateResult.sh &> output.log
 "
 

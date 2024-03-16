@@ -23,6 +23,7 @@ ssh node-3 'containerid=$(docker ps -aqf "name=^socialNetwork_media-mongodb"); d
 ssh node-3 'containerid=$(docker ps -aqf "name=^socialNetwork_social-graph-service"); docker update --cpuset-cpus 5 $containerid'
 ssh node-3 'containerid=$(docker ps -aqf "name=^socialNetwork_media-frontend"); docker update --cpuset-cpus 6 $containerid'
 ssh node-3 'containerid=$(docker ps -aqf "name=^socialNetwork_user-timeline-redis"); docker update --cpuset-cpus 7 $containerid'
+ssh node-3 'containerid=$(docker ps -aqf "name=^socialNetwork_cpu-intensive"); docker update --cpuset-cpus 7 $containerid'
 
 ssh node-4 'containerid=$(docker ps -aqf "name=^socialNetwork_user-memcached"); docker update --cpuset-cpus 2 $containerid'
 ssh node-4 'containerid=$(docker ps -aqf "name=^socialNetwork_social-graph-redis"); docker update --cpuset-cpus 3 $containerid'
