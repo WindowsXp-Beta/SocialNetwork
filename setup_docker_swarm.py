@@ -79,13 +79,16 @@ with ThreadingGroup(*[f'node-{idx}' for idx in range(0, args.number)]) as swarm_
     print('** RubbosClient copied **')
 
     os.chdir(Path.home())
-    for file in ['src', 'RubbosClient_src', 'socialNetwork', 'scripts_limit']:
+    for file in ['src', 'RubbosClient_src', 'socialNetwork', 'scripts_limit', 'internal_triggers']:
         subprocess.run(shlex.split(f'unzip {file}.zip'))
     subprocess.run(shlex.split('mv DeathStarBench/socialNetwork/src DeathStarBench/socialNetwork/src.bk'))
     subprocess.run(shlex.split('mv src DeathStarBench/socialNetwork/'))
     os.chdir(Path.home()/'DeathStarBench'/'socialNetwork')
     subprocess.run(shlex.split('sudo docker build -t 127.0.0.1:5000/social-network-microservices:withLog_01 .'))
     subprocess.run(shlex.split('sudo docker push 127.0.0.1:5000/social-network-microservices:withLog_01'))
+    os.chdir(Path.home()/'internal_triggers')
+    subprocess.run(shlex.split('sudo docker build -t 127.0.0.1:5000/cpu_intensive .'))
+    subprocess.run(shlex.split('sudo docker push 127.0.0.1:5000/cpu_intensive'))
     print('** customized socialNetwork docker image built **')
 
     os.chdir(Path.home())

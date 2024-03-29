@@ -490,6 +490,11 @@ services:
     image: cassandra:3.9
     deploy:
 
+  cpu-intensive:
+    image: 127.0.0.1:5000/cpu_intensive
+    deploy:
+      placement:
+        constraints: [node.hostname == node-3.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
 networks:
   default:
     driver: overlay
