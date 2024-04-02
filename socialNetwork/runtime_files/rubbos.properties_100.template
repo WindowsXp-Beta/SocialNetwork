@@ -39,7 +39,7 @@ workload_remote_client_nodes = 10.10.1.8,10.10.1.9,10.10.1.10,10.10.1.11
 
 workload_benchmark_node = 10.10.1.7
 
-workload_remote_client_command = /users/<<USERNAME>>/elba/rubbos/jdk1.8.0_241/bin/java -classpath .:/users/<<USERNAME>>/elba/rubbos/RUBBoS/Client/:/users/<<USERNAME>>/elba/rubbos/RUBBoS/Client/RubbosClient-0.1.jar-Xmx1300m -Dhttp.keepAlive=true -Dhttp.maxConnections=1000000 edu.rice.rubbos.client.NewEmulator
+workload_remote_client_command = /users/<<USERNAME>>/elba/rubbos/jdk1.8.0_241/bin/java -classpath .:/users/<<USERNAME>>/elba/rubbos/RUBBoS/Client/:/users/<<USERNAME>>/elba/rubbos/RUBBoS/Client/RubbosClient-0.1.jar -Xmx1300m -Dhttp.keepAlive=true -Dhttp.maxConnections=1000000 edu.rice.rubbos.client.NewEmulator
 
 workload_number_of_clients_per_node = 20
 
