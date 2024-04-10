@@ -23,7 +23,8 @@ do
         cp ../../../scripts_limit/collectlProcExtract.py .
         cp ../../../scripts_limit/front_log_extract.py .
         cp ../../../scripts_limit/client_log_extract.py .
-        cp ../../../scripts_limit/aggregateInOutPut_ClientTier3.sh .
+        cp ../../../scripts_limit/service_log_extract.py .
+        cp ../../../scripts_limit/aggregateInOutPut_AllTiers.sh .
         echo Copied all python scripts into $j
         python2 collectlExtract.py
         echo RAN collectlExtract.py
@@ -40,8 +41,10 @@ do
         rm result.jtl
         cat result*.jtl >> result.jtl
         python2 client_log_extract.py
+        
+        python3 service_log_extract.py
 
-        ./aggregateInOutPut_ClientTier3.sh
+        ./aggregateInOutPut_AllTiers.sh
 
         cd ..
     done
@@ -49,4 +52,5 @@ do
     cd ..
 done
 
-./plotAverage.sh
+# Currently we are not running the following script as we do not have enough tiers for it to be useful
+# ./plotAverage.sh
