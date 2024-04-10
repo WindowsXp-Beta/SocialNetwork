@@ -33,13 +33,13 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-2.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-2.azhang-200785.infosphere.emulab.net]
     command: ["ComposePostService"]
     hostname: compose-post-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
     volumes:
-      - /users/XinpengW/DeathStarBench/socialNetwork/config:/social-network-microservices/config
-      - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
+      - /users/azhang/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/azhang/DeathStarBench/socialNetwork/keys:/keys
 
   home-timeline-redis:
     depends_on:
@@ -49,11 +49,11 @@ services:
     image: redis
     command: "redis-server /social-network-microservices/config/redis.conf"
     volumes:
-      - /users/XinpengW/DeathStarBench/socialNetwork/config:/social-network-microservices/config
-      - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
+      - /users/azhang/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/azhang/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-2.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-2.azhang-200785.infosphere.emulab.net]
 
   home-timeline-service:
     depends_on:
@@ -64,13 +64,13 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-0.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-0.azhang-200785.infosphere.emulab.net]
     command: ["HomeTimelineService"]
     hostname: home-timeline-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
     volumes:
-      - /users/XinpengW/DeathStarBench/socialNetwork/config:/social-network-microservices/config
-      - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
+      - /users/azhang/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/azhang/DeathStarBench/socialNetwork/keys:/keys
 
   media-frontend:
     depends_on:
@@ -81,14 +81,14 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-3.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-3.azhang-200785.infosphere.emulab.net]
     hostname: media-frontend
     image: yg397/media-frontend:xenial
     ports:
       - 8081:8080
     volumes:
-      - /users/XinpengW/DeathStarBench/socialNetwork/media-frontend/lua-scripts:/usr/local/openresty/nginx/lua-scripts
-      - /users/XinpengW/DeathStarBench/socialNetwork/media-frontend/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - /users/azhang/DeathStarBench/socialNetwork/media-frontend/lua-scripts:/usr/local/openresty/nginx/lua-scripts
+      - /users/azhang/DeathStarBench/socialNetwork/media-frontend/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
 
   media-memcached:
     depends_on:
@@ -103,7 +103,7 @@ services:
       - "-c 4096"
     deploy:
       placement:
-        constraints: [node.hostname == node-1.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-1.azhang-200785.infosphere.emulab.net]
 
   media-mongodb:
     depends_on:
@@ -114,11 +114,11 @@ services:
     command: "mongod --nojournal --quiet --config /social-network-microservices/config/mongod.conf"
     # command: "mongod --serviceExecutor adaptive --listenBacklog 1024 --syncdelay 3600 --wiredTigerCacheSizeGB 2"
     volumes:
-      - /users/XinpengW/DeathStarBench/socialNetwork/config:/social-network-microservices/config
-      - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
+      - /users/azhang/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/azhang/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-3.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-3.azhang-200785.infosphere.emulab.net]
 
   media-service:
     depends_on:
@@ -130,13 +130,13 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-2.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-2.azhang-200785.infosphere.emulab.net]
     command: ["MediaService"]
     hostname: media-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
     volumes:
-      - /users/XinpengW/DeathStarBench/socialNetwork/config:/social-network-microservices/config
-      - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
+      - /users/azhang/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/azhang/DeathStarBench/socialNetwork/keys:/keys
 
   nginx-web-server:
     depends_on:
@@ -147,19 +147,19 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-5.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-5.azhang-200785.infosphere.emulab.net]
     hostname: nginx-web-server
     image: yg397/openresty-thrift:xenial
     ports:
       - 8080:8080
     volumes:
-      - /users/XinpengW/DeathStarBench/socialNetwork/nginx-web-server/lua-scripts:/usr/local/openresty/nginx/lua-scripts
-      - /users/XinpengW/DeathStarBench/socialNetwork/nginx-web-server/pages:/usr/local/openresty/nginx/pages
-      - /users/XinpengW/DeathStarBench/socialNetwork/nginx-web-server/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
-      - /users/XinpengW/DeathStarBench/socialNetwork/nginx-web-server/jaeger-config.json:/usr/local/openresty/nginx/jaeger-config.json
-      - /users/XinpengW/DeathStarBench/socialNetwork/gen-lua:/gen-lua
-      - /users/XinpengW/DeathStarBench/socialNetwork/docker/openresty-thrift/lua-thrift:/usr/local/openresty/lualib/thrift
-      - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
+      - /users/azhang/DeathStarBench/socialNetwork/nginx-web-server/lua-scripts:/usr/local/openresty/nginx/lua-scripts
+      - /users/azhang/DeathStarBench/socialNetwork/nginx-web-server/pages:/usr/local/openresty/nginx/pages
+      - /users/azhang/DeathStarBench/socialNetwork/nginx-web-server/conf/nginx.conf:/usr/local/openresty/nginx/conf/nginx.conf
+      - /users/azhang/DeathStarBench/socialNetwork/nginx-web-server/jaeger-config.json:/usr/local/openresty/nginx/jaeger-config.json
+      - /users/azhang/DeathStarBench/socialNetwork/gen-lua:/gen-lua
+      - /users/azhang/DeathStarBench/socialNetwork/docker/openresty-thrift/lua-thrift:/usr/local/openresty/lualib/thrift
+      - /users/azhang/DeathStarBench/socialNetwork/keys:/keys
 
   post-storage-memcached:
     depends_on:
@@ -174,7 +174,7 @@ services:
       - "-c 4096"
     deploy:
       placement:
-        constraints: [node.hostname == node-2.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-2.azhang-200785.infosphere.emulab.net]
 
   post-storage-mongodb:
     depends_on:
@@ -185,11 +185,11 @@ services:
     command: "mongod --nojournal --quiet --config /social-network-microservices/config/mongod.conf"
     # command: "mongod --serviceExecutor adaptive --listenBacklog 1024 --syncdelay 3600 --wiredTigerCacheSizeGB 75"
     volumes:
-      - /users/XinpengW/DeathStarBench/socialNetwork/config:/social-network-microservices/config
-      - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
+      - /users/azhang/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/azhang/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-1.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-1.azhang-200785.infosphere.emulab.net]
 
   post-storage-service:
     depends_on:
@@ -201,13 +201,13 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-1.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-1.azhang-200785.infosphere.emulab.net]
     command: ["PostStorageService"]
     hostname: post-storage-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
     volumes:
-      - /users/XinpengW/DeathStarBench/socialNetwork/config:/social-network-microservices/config
-      - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
+      - /users/azhang/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/azhang/DeathStarBench/socialNetwork/keys:/keys
 
   social-graph-mongodb:
     depends_on:
@@ -218,11 +218,11 @@ services:
     command: "mongod --nojournal --quiet --config /social-network-microservices/config/mongod.conf"
     # command: "mongod --serviceExecutor adaptive --listenBacklog 1024 --syncdelay 3600 --wiredTigerCacheSizeGB 16"
     volumes:
-      - /users/XinpengW/DeathStarBench/socialNetwork/config:/social-network-microservices/config
-      - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
+      - /users/azhang/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/azhang/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-2.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-2.azhang-200785.infosphere.emulab.net]
 
   social-graph-redis:
     depends_on:
@@ -232,11 +232,11 @@ services:
     image: redis
     command: "redis-server /social-network-microservices/config/redis.conf"
     volumes:
-      - /users/XinpengW/DeathStarBench/socialNetwork/config:/social-network-microservices/config
-      - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
+      - /users/azhang/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/azhang/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-4.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-4.azhang-200785.infosphere.emulab.net]
 
   social-graph-service:
     depends_on:
@@ -248,13 +248,13 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-3.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-3.azhang-200785.infosphere.emulab.net]
     command: ["SocialGraphService"]
     hostname: social-graph-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
     volumes:
-      - /users/XinpengW/DeathStarBench/socialNetwork/config:/social-network-microservices/config
-      - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
+      - /users/azhang/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/azhang/DeathStarBench/socialNetwork/keys:/keys
 
   text-service:
     depends_on:
@@ -265,13 +265,13 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-3.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-3.azhang-200785.infosphere.emulab.net]
     command: ["TextService"]
     hostname: text-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
     volumes:
-      - /users/XinpengW/DeathStarBench/socialNetwork/config:/social-network-microservices/config
-      - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
+      - /users/azhang/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/azhang/DeathStarBench/socialNetwork/keys:/keys
 
   unique-id-service:
     depends_on:
@@ -282,13 +282,13 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-4.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-4.azhang-200785.infosphere.emulab.net]
     command: ["UniqueIdService"]
     hostname: unique-id-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
     volumes:
-      - /users/XinpengW/DeathStarBench/socialNetwork/config:/social-network-microservices/config
-      - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
+      - /users/azhang/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/azhang/DeathStarBench/socialNetwork/keys:/keys
 
   url-shorten-memcached:
     depends_on:
@@ -303,7 +303,7 @@ services:
       - "-c 4096"
     deploy:
       placement:
-        constraints: [node.hostname == node-3.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-3.azhang-200785.infosphere.emulab.net]
 
   url-shorten-mongodb:
     depends_on:
@@ -314,11 +314,11 @@ services:
     command: "mongod --nojournal --quiet --config /social-network-microservices/config/mongod.conf"
     # command: "mongod --serviceExecutor adaptive --listenBacklog 1024 --syncdelay 3600 --wiredTigerCacheSizeGB 36"
     volumes:
-      - /users/XinpengW/DeathStarBench/socialNetwork/config:/social-network-microservices/config
-      - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
+      - /users/azhang/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/azhang/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-5.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-5.azhang-200785.infosphere.emulab.net]
 
   url-shorten-service:
     depends_on:
@@ -330,13 +330,13 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-2.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-2.azhang-200785.infosphere.emulab.net]
     command: ["UrlShortenService"]
     hostname: url-shorten-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
     volumes:
-      - /users/XinpengW/DeathStarBench/socialNetwork/config:/social-network-microservices/config
-      - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
+      - /users/azhang/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/azhang/DeathStarBench/socialNetwork/keys:/keys
 
   user-memcached:
     depends_on:
@@ -351,7 +351,7 @@ services:
       - "-c 4096"
     deploy:
       placement:
-        constraints: [node.hostname == node-4.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-4.azhang-200785.infosphere.emulab.net]
 
   user-mention-service:
     depends_on:
@@ -362,13 +362,13 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-2.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-2.azhang-200785.infosphere.emulab.net]
     command: ["UserMentionService"]
     hostname: user-mention-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
     volumes:
-      - /users/XinpengW/DeathStarBench/socialNetwork/config:/social-network-microservices/config
-      - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
+      - /users/azhang/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/azhang/DeathStarBench/socialNetwork/keys:/keys
 
   user-mongodb:
     depends_on:
@@ -379,11 +379,11 @@ services:
     command: "mongod --nojournal --quiet --config /social-network-microservices/config/mongod.conf"
     # command: "mongod --serviceExecutor adaptive --listenBacklog 1024 --syncdelay 3600 --wiredTigerCacheSizeGB 8"
     volumes:
-      - /users/XinpengW/DeathStarBench/socialNetwork/config:/social-network-microservices/config
-      - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
+      - /users/azhang/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/azhang/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-0.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-0.azhang-200785.infosphere.emulab.net]
 
   user-service:
     depends_on:
@@ -395,13 +395,13 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-4.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-4.azhang-200785.infosphere.emulab.net]
     command: ["UserService"]
     hostname: user-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
     volumes:
-      - /users/XinpengW/DeathStarBench/socialNetwork/config:/social-network-microservices/config
-      - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
+      - /users/azhang/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/azhang/DeathStarBench/socialNetwork/keys:/keys
 
   user-timeline-mongodb:
     depends_on:
@@ -412,11 +412,11 @@ services:
     command: "mongod --nojournal --quiet --config /social-network-microservices/config/mongod.conf"
     # command: "mongod --serviceExecutor adaptive --listenBacklog 1024 --syncdelay 3600 --wiredTigerCacheSizeGB 75"
     volumes:
-      - /users/XinpengW/DeathStarBench/socialNetwork/config:/social-network-microservices/config
-      - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
+      - /users/azhang/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/azhang/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-4.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-4.azhang-200785.infosphere.emulab.net]
 
   user-timeline-redis:
     depends_on:
@@ -426,11 +426,11 @@ services:
     image: redis
     command: "redis-server /social-network-microservices/config/redis.conf"
     volumes:
-      - /users/XinpengW/DeathStarBench/socialNetwork/config:/social-network-microservices/config
-      - /users/XinpengW/DeathStarBench/socialNetwork/keys:/keys
+      - /users/azhang/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/azhang/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-3.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-3.azhang-200785.infosphere.emulab.net]
 
   user-timeline-service:
     depends_on:
@@ -441,12 +441,12 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-4.XinpengW-187071.infosphere-pg0.cloudlab.umass.edu]
+        constraints: [node.hostname == node-4.azhang-200785.infosphere.emulab.net]
     command: ["UserTimelineService"]
     hostname: user-timeline-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
     volumes:
-      - /users/XinpengW/DeathStarBench/socialNetwork/config:/social-network-microservices/config
+      - /users/azhang/DeathStarBench/socialNetwork/config:/social-network-microservices/config
 
   jaeger-collector:
     image: jaegertracing/jaeger-collector
@@ -490,6 +490,11 @@ services:
     image: cassandra:3.9
     deploy:
 
+  cpu-intensive:
+    image: 127.0.0.1:5000/cpu_intensive
+    deploy:
+      placement:
+        constraints: [node.hostname == node-3.azhang-200785.infosphere.emulab.net]
 networks:
   default:
     driver: overlay

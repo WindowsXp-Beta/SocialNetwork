@@ -53,6 +53,7 @@ print "%13d %13d" % (int(runtime_start), int(runtime_end))
 filter = r"\d+\s\d+\s+[A-Za-z]+"
 #page_type = r"(?<=edu.rice.rubbos.servlets.)\w+"
 with open(hfile) as f, open(output, "w") as w:
+	w.write("start_time,end_time,request_type,response_time\n")
     for line in f:
         #print line
         matches = re.findall(filter, str(line))
@@ -67,16 +68,14 @@ with open(hfile) as f, open(output, "w") as w:
         	#reqType   = "StoriesOfTheDay"
         	response  = int(line.split()[1])
 
-		typeStr = line.split()[3]
+		typeStr = line.split()[2]
 		#print typeStr
-		type_filter = r"/[A-Za-z]+"
-		reqType = re.findall(type_filter, typeStr)
-		if reqType:
-                        reqType = reqType[0][1:]
+		type_filter = r"[A-Za-z]+"
+		reqType = re.findall(type_filter, typeStr)[0]
 			#print reqType
 		#print "%i %i %i" % (starttime, endtime, response)
-        	fieldnames = ['starttime', 'endtime', 'reqType', 'response']
+        	fieldnames = ['start_time', 'end_time', 'request_type', 'response_time']
         	writer = csv.DictWriter(w, fieldnames=fieldnames)
         	if starttime >= runtime_start and starttime <= runtime_end :
 			#print "Hello"
-        		writer.writerow({'starttime':starttime, 'endtime':endtime, 'reqType':"StoriesOfTheDay", 'response':response})
+        		writer.writerow({'start_time':starttime, 'end_time':endtime, 'request_type':reqType, 'response_time':response})
