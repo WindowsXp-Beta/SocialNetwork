@@ -2,13 +2,13 @@
 FROM gcc:latest
 
 # Set the working directory in the container
-WORKDIR /usr/src/myapp
+WORKDIR /usr/src/myapp_io
 
 # Copy the current directory contents into the container at /usr/src/myapp
 COPY main.cpp main.cpp
 
 # Compile your C++ program
-RUN g++ -o myapp main.cpp
+RUN g++ -o myapp_io main.cpp
 
 # Run the output program from the previous step
-CMD ["./myapp"]
+CMD ["./myapp_io"]
