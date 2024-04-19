@@ -44,8 +44,8 @@ def processLogBO(startPatternStr):
         for line in infile.readlines():
             if 'UTC' not in line and tmpSwitch == 0:
                 continue
-        tmpSwitch = 1
-        collectlLogfile.write("%s" % (line))
+            tmpSwitch = 1
+            collectlLogfile.write("%s" % (line))
         infile.close()
         collectlLogfile.close()
 

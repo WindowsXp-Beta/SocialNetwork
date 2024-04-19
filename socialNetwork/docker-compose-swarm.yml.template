@@ -33,7 +33,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-2.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-2.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
     command: ["ComposePostService"]
     hostname: compose-post-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -53,7 +53,7 @@ services:
       - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-2.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-2.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
 
   home-timeline-service:
     depends_on:
@@ -64,7 +64,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-0.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-0.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
     command: ["HomeTimelineService"]
     hostname: home-timeline-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -81,7 +81,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-3.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-3.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
     hostname: media-frontend
     image: yg397/media-frontend:xenial
     ports:
@@ -103,7 +103,7 @@ services:
       - "-c 4096"
     deploy:
       placement:
-        constraints: [node.hostname == node-1.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-1.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
 
   media-mongodb:
     depends_on:
@@ -118,7 +118,7 @@ services:
       - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-3.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-3.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
 
   media-service:
     depends_on:
@@ -130,7 +130,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-2.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-2.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
     command: ["MediaService"]
     hostname: media-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -147,7 +147,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-5.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-5.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
     hostname: nginx-web-server
     image: yg397/openresty-thrift:xenial
     ports:
@@ -174,7 +174,7 @@ services:
       - "-c 4096"
     deploy:
       placement:
-        constraints: [node.hostname == node-2.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-2.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
 
   post-storage-mongodb:
     depends_on:
@@ -189,7 +189,7 @@ services:
       - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-1.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-1.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
 
   post-storage-service:
     depends_on:
@@ -201,7 +201,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-1.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-1.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
     command: ["PostStorageService"]
     hostname: post-storage-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -222,7 +222,7 @@ services:
       - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-2.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-2.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
 
   social-graph-redis:
     depends_on:
@@ -236,7 +236,7 @@ services:
       - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-4.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-4.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
 
   social-graph-service:
     depends_on:
@@ -248,7 +248,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-3.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-3.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
     command: ["SocialGraphService"]
     hostname: social-graph-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -265,7 +265,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-3.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-3.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
     command: ["TextService"]
     hostname: text-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -282,7 +282,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-4.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-4.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
     command: ["UniqueIdService"]
     hostname: unique-id-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -303,7 +303,7 @@ services:
       - "-c 4096"
     deploy:
       placement:
-        constraints: [node.hostname == node-3.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-3.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
 
   url-shorten-mongodb:
     depends_on:
@@ -318,7 +318,7 @@ services:
       - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-5.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-5.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
 
   url-shorten-service:
     depends_on:
@@ -330,7 +330,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-2.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-2.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
     command: ["UrlShortenService"]
     hostname: url-shorten-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -351,7 +351,7 @@ services:
       - "-c 4096"
     deploy:
       placement:
-        constraints: [node.hostname == node-4.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-4.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
 
   user-mention-service:
     depends_on:
@@ -362,7 +362,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-2.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-2.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
     command: ["UserMentionService"]
     hostname: user-mention-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -383,7 +383,7 @@ services:
       - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-0.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-0.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
 
   user-service:
     depends_on:
@@ -395,7 +395,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-4.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-4.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
     command: ["UserService"]
     hostname: user-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -416,7 +416,7 @@ services:
       - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-4.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-4.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
 
   user-timeline-redis:
     depends_on:
@@ -430,7 +430,7 @@ services:
       - /users/<<USERNAME>>/DeathStarBench/socialNetwork/keys:/keys
     deploy:
       placement:
-        constraints: [node.hostname == node-3.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-3.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
 
   user-timeline-service:
     depends_on:
@@ -441,7 +441,7 @@ services:
       restart_policy:
         condition: any
       placement:
-        constraints: [node.hostname == node-4.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-4.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
     command: ["UserTimelineService"]
     hostname: user-timeline-service
     image: 127.0.0.1:5000/social-network-microservices:withLog_01
@@ -494,7 +494,7 @@ services:
     image: 127.0.0.1:5000/cpu_intensive
     deploy:
       placement:
-        constraints: [node.hostname == node-3.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+        constraints: [node.hostname == node-3.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
 networks:
   default:
     driver: overlay
