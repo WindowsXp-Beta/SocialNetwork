@@ -23,24 +23,35 @@
 # - Add edit feature to allow users to make minor adjustments to current custom jobs
 # - Allow users to chain together jobs via a job queue
 
+# Version 1.5 (4/4/24):
+# - Edit job queueing logic for file management
+# - Add delete custom job feature
+
+# Version 1.6 (4/12/24):
+# - Add docker and node dedication config editing when starting a job
+
 
 
 import os, sys, subprocess
 
 # !!!!! Make sure JobManager and controller_setup are in the same directory !!!!!
 def callController(arguments):
-	os.system('nano config/config.json')
-	command = f'./controller_setup.sh ' \
-		f'--username {arguments[0]} ' \
-		f'--private_ssh_key_path "{arguments[1]}" ' \
-		f'--controller_node {arguments[2]} ' \
-		f'--git_email {arguments[3]} ' \
-		f'--swarm_node_number {arguments[4]} ' \
-		f'--client_node_number {arguments[5]}'
-	os.system(command)
+    os.system('nano config/config.json')
+    os.system('nano socialNetwork/docker-compose-swarm.yml.template')
+    os.system('nano socialNetwork/scripts/dedicate.sh')
+    command = f'./controller_setup.sh ' \
+        f'--username {arguments[0]} ' \
+        f'--private_ssh_key_path "{arguments[1]}" ' \
+        f'--controller_node {arguments[2]} ' \
+        f'--git_email {arguments[3]} ' \
+        f'--swarm_node_number {arguments[4]} ' \
+        f'--client_node_number {arguments[5]}'
+    os.system(command)
 
 def callControllerQueue(job_queue):
     os.system('nano config/config.json')
+    os.system('nano socialNetwork/docker-compose-swarm.yml.template')
+    os.system('nano socialNetwork/scripts/dedicate.sh')
     for job in job_queue:
         command = f'./controller_setup.sh ' \
                   f'--username {job[0]} ' \
@@ -168,50 +179,50 @@ def defaultSetup():
     if len(job_inputs) > 1:
         chain_jobs(job_inputs)
     else:
-     	callController(user_input)
+        callController(user_input)
 
 # Load job configurations for the specified directory (either preset or custom)
 # preset = 1 // custom = 2
 def loadSavedJobs(dir):
-	JOB_DIR = "PresetJobs" if dir == 1 else "CustomJobs" if dir == 2 else None
-	if JOB_DIR is None:
-		print("Invalid directory choice.")
-		return
-	job_dir = f"./{JOB_DIR}/jobs"
-	try:
-		with open(job_dir, 'r') as file:
-			job_num = file.read().strip()  # Read the number of jobs
-	except FileNotFoundError:
-		print(f"File not found: {job_dir}")
-		return
-	try:
-		JOB_NUMS = int(job_num)
-	except ValueError:
-		print("Invalid job number.")
-		return
+    JOB_DIR = "PresetJobs" if dir == 1 else "CustomJobs" if dir == 2 else None
+    if JOB_DIR is None:
+        print("Invalid directory choice.")
+        return
+    job_dir = f"./{JOB_DIR}/jobs"
+    try:
+        with open(job_dir, 'r') as file:
+            job_num = file.read().strip()  # Read the number of jobs
+    except FileNotFoundError:
+        print(f"File not found: {job_dir}")
+        return
+    try:
+        JOB_NUMS = int(job_num)
+    except ValueError:
+        print("Invalid job number.")
+        return
     
-	if JOB_NUMS == 0:
-		print("No saved jobs!")
-		return
-	print(f"=========={JOB_DIR}==========")
-	for i in range(1, JOB_NUMS + 1):
-		job_file_path = f"./{JOB_DIR}/job{i}"
-		try:
-			with open(job_file_path, 'r') as job_file:
-				print(f"job{i}:")
-				for line in job_file:
-					print("    " + line.strip())
-		except FileNotFoundError:
-			print(f"File not found: job{i}")
-		except Exception as e:
-			print(f"Error reading file job{i}: {e}")
-	job_to_load = input("Please choose which job to load: ")
-	job_file_path = f"./{JOB_DIR}/job{job_to_load}"
-	with open(job_file_path, 'r') as file:
-		user_input = []
-		for line in file:
-			user_input.append(line.strip())
-	callController(user_input)
+    if JOB_NUMS == 0:
+        print("No saved jobs!")
+        return
+    print(f"=========={JOB_DIR}==========")
+    for i in range(1, JOB_NUMS + 1):
+        job_file_path = f"./{JOB_DIR}/job{i}"
+        try:
+            with open(job_file_path, 'r') as job_file:
+                print(f"job{i}:")
+                for line in job_file:
+                    print("    " + line.strip())
+        except FileNotFoundError:
+            print(f"File not found: job{i}")
+        except Exception as e:
+            print(f"Error reading file job{i}: {e}")
+    job_to_load = input("Please choose which job to load: ")
+    job_file_path = f"./{JOB_DIR}/job{job_to_load}"
+    with open(job_file_path, 'r') as file:
+        user_input = []
+        for line in file:
+            user_input.append(line.strip())
+    callController(user_input)
 
 # Save the user's input as a job via file management
 def saveCustomJob(job_inputs):
@@ -286,11 +297,11 @@ def removeCustomJob():
 
 
 if not (len(sys.argv) > 1):
-	defaultSetup()
+    defaultSetup()
 elif (sys.argv[1] == '-preset'):
-	loadSavedJobs(1)
+    loadSavedJobs(1)
 elif (sys.argv[1] == '-custom'):
-	loadSavedJobs(2)
+    loadSavedJobs(2)
 elif (sys.argv[1] == '-remove'):
     removeCustomJob()
 elif sys.argv[1] == '-chain':
@@ -300,5 +311,5 @@ elif sys.argv[1] == '-chain':
 elif sys.argv[1] == '-edit':
     editCustomJob()
 else:
-	print("ERROR: Unknown argument into JobManager")
-	print("USAGE: JobManager.py [-p/-c/(none)] // -p: Pre-defined Setup / -c: Custom Setup")
+    print("ERROR: Unknown argument into JobManager")
+    print("USAGE: JobManager.py [-p/-c/(none)] // -p: Pre-defined Setup / -c: Custom Setup")
