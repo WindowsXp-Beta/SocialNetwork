@@ -42,9 +42,9 @@ python2 ./aggregateInOutPut_ClientTier_ALL.py $timeSpan $startTime $endTime $con
 python2 ./aggregateInOutPut_ClientTier_ExcludeLongReq1.py $timeSpan $startTime $endTime $concurrency $file "detailRT-client"
 python2 ./aggregateInOutPut_ClientTier_LongReq1.py $timeSpan $startTime $endTime $concurrency $file "detailRT-client"
 
-python2 ./aggregateInOutPut_ClientTier_ALL.py $timeSpan $startTime $endTime $concurrency "front_req.csv" "detailRT-front"
-python2 ./aggregateInOutPut_ClientTier_ExcludeLongReq1.py $timeSpan $startTime $endTime $concurrency "front_req.csv" "detailRT-front"
-python2 ./aggregateInOutPut_ClientTier_LongReq1.py $timeSpan $startTime $endTime $concurrency "front_req.csv" "detailRT-front"
+# python2 ./aggregateInOutPut_ClientTier_ALL.py $timeSpan $startTime $endTime $concurrency "front_req.csv" "detailRT-front"
+# python2 ./aggregateInOutPut_ClientTier_ExcludeLongReq1.py $timeSpan $startTime $endTime $concurrency "front_req.csv" "detailRT-front"
+# python2 ./aggregateInOutPut_ClientTier_LongReq1.py $timeSpan $startTime $endTime $concurrency "front_req.csv" "detailRT-front"
 
 python2 RT_dist_extract.py
 
@@ -71,9 +71,9 @@ gnuplot -e "tiers='$tiers'; timespan='$timeSpan'; wl='$concurrency'; output_name
 gnuplot -e "datasource='detailRT-client_wl"${concurrency}"'" histgramPlot.gnuplot
 ps2pdf detailRT-client_wl*.ps
 
-gnuplot -e "tiers='$tiers'; timespan='$timeSpan'; wl='$concurrency'; output_name='$output_dist'; \
-    title_name='$title_name'; x1='$x1'; x2='$x2'; timestamp_offset='$timestamp_offset'; \
-    dists='$dists';" RT_dist.gnuplot
+# gnuplot -e "tiers='$tiers'; timespan='$timeSpan'; wl='$concurrency'; output_name='$output_dist'; \
+#     title_name='$title_name'; x1='$x1'; x2='$x2'; timestamp_offset='$timestamp_offset'; \
+#     dists='$dists';" RT_dist.gnuplot
 
 gnuplot -e "tiers='$tiers'; timespan='$timeSpan'; wl='$concurrency'; output_name='$output'; \
     title_name='$title_name'; x1='$x1'; x2='$x2'; timestamp_offset='$timestamp_offset'; \

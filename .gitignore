@@ -1,3 +1,6 @@
 /RubbosClient/elba/rubbos/jdk1.8.0_241
 /RubbosClient/rubbos/jdk-8u241-linux-x64.tar.gz
+/config/config.json
+/socialNetwork/docker-compose-swarm.yml
+
 *.zip

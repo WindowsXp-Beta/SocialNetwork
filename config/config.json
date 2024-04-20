@@ -1,5 +1,5 @@
 {
     "username": "$your_cloud_lab_username",
     "experiment_name": "$username-six_digit_number",
-    "ssh_host": "cloudlab.umass.edu"
+    "ssh_host": "$host_ssh_name"
 }

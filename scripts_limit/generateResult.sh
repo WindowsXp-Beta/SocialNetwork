@@ -13,35 +13,44 @@ fi
 for i in $( ls -d */ )
 do
     cd $i
-    cp ../../scripts_limit/collectlExtract.py .
-    cp ../../scripts_limit/collectlResultFilter.py .
-    cp ../../scripts_limit/collectlResultFilter2.py .
-    cp ../../scripts_limit/collectlProcExtract.py .
-    cp ../../scripts_limit/front_log_extract.py .
-    cp ../../scripts_limit/client_log_extract.py .
-    cp ../../scripts_limit/aggregateInOutPut_ClientTier3.sh .
-    echo Copied all python scripts into $i
-    python2 collectlExtract.py
-    echo RAN collectlExtract.py
-    python2 collectlResultFilter.py
-    echo RAN collectlResultFilter.py
-    python2 collectlResultFilter2.py
-    echo RAN collectlResultFilter2.py
-    python2 collectlProcExtract.py
-    echo RAN collectlProcExtract.py
-    # We don't need to run front_log_extract.py because we don't have sysdig logs
-    # python2 front_log_extract.py
-    # echo RAN front_log_extract.py
 
-    rm result.jtl
-    cat result*.jtl >> result.jtl
-    python2 client_log_extract.py
+    for j in $( ls -d */ )
+    do
+        cd $j
+        cp ../../../scripts_limit/collectlExtract.py .
+        cp ../../../scripts_limit/collectlResultFilter.py .
+        cp ../../../scripts_limit/collectlResultFilter2.py .
+        cp ../../../scripts_limit/collectlProcExtract.py .
+        cp ../../../scripts_limit/front_log_extract.py .
+        cp ../../../scripts_limit/client_log_extract.py .
+        cp ../../../scripts_limit/service_log_extract.py .
+        cp ../../../scripts_limit/aggregateInOutPut_AllTiers.sh .
+        echo Copied all python scripts into $j
+        python2 collectlExtract.py
+        echo RAN collectlExtract.py
+        python2 collectlResultFilter.py
+        echo RAN collectlResultFilter.py
+        python2 collectlResultFilter2.py
+        echo RAN collectlResultFilter2.py
+        python2 collectlProcExtract.py
+        echo RAN collectlProcExtract.py
+        # We don't need to run front_log_extract.py because we don't have sysdig logs
+        # python2 front_log_extract.py
+        # echo RAN front_log_extract.py
 
-    ./aggregateInOutPut_ClientTier3.sh
+        rm result.jtl
+        cat result*.jtl >> result.jtl
+        python2 client_log_extract.py
+        
+        python3 service_log_extract.py
 
+        ./aggregateInOutPut_AllTiers.sh
+
+        cd ..
+    done
 
     cd ..
-
 done
 
-./plotAverage.sh
+# Currently we are not running the following script as we do not have enough tiers for it to be useful
+# ./plotAverage.sh

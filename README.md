@@ -22,7 +22,7 @@ hostname format is `node-{idx}.{experiment_name}.infosphere-pg0.{ssh-host withou
 5. Delete existing zip to obtain new data.
 
 ## RUBBoS Properties
-Fix hardcoded paths in socialNetwork/runtime_files/rubbos.properties_100 properties to your paths.
+Fix hardcoded paths in `socialNetwork/runtime_files/rubbos.properties_1000` properties to your paths.
 
 ## Running Controller Setup Script
 Run the Controller setup script. The command might resemble the following:
@@ -133,6 +133,10 @@ Skype: live:x.gu3 (xgu5@outlook.com)
 
 1. do we need to start jaeger monitor? I don't see pinned.
 2. client send requests to which hostname. don't see loadbalancer, or any node? Will swarm network dispatch the traffic?
+
+## Issues
+1. We currently do not have a reliable way to determine the constraints in `docker-compose-swarm-yml.template`, specifically whether it should be `infosphere` or `infosphere-pg0` as it seems to be determined based on what host you use. To figure out the correct hostname for your experiment, `ssh` into one of the nodes and type `hostname`.
+2. The upstream repository, [DeathStarBench](https://github.com/delimitrou/DeathStarBench), had changes that broke the experiment resulting in certain logs (specifically `post-storage-service.log`). Therefore we implemented a temporary fix in `setup_docker_swarm.py` where we checkout to the last commit before the issue, `b2b7af9`. This is a temporary fix and should be removed once the upstream gets fixed or we changed the rubbos code affected by the upstream changes.
 
 ## TODO
 
