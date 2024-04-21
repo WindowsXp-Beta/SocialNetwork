@@ -37,6 +37,44 @@ Run the Controller setup script. The command might resemble the following:
 --client_node_number 5
 ```
 
+## Starting a New Experiment via JobManager
+Ensure python3 is installed on your system. To initialize a new experiment, enter in terminal `python3 JobManager.py`. Enter in the following fields similar to the controller_setup.sh script:
+```
+CloudLab Username: (example: [kfry9])
+Total path of private ssh key: (example: [/Users/kfry9/.ssh/id_rsa])
+Hostname of controller node: (example: [pc506.emulab.net])
+Github email address: (example: [kylemfry3@gmail.com])
+Number of Swarm Nodes: (example: [6])
+Number of Client Nodes: (example: [5])
+```
+
+You will then be asked if you want to add another job. You may add as many experiments as you like during this time. To continue, input `n`. You will then be brought to the `config/config.json` file in a terminal text editor (nano). You may use the arrow keys to navigate and change the needed values. Once done, press CTRL + O to bring up the save prompt. After saving, press CTRL + X to exit and continue. Follow similar suit for the Docker Swarm template and Dedicate scripts that will follow.
+
+Confirm all information is correct and start the experiment once prompted.
+
+## Re-starting an Experiment via JobManager
+Your previously entered experiments via JobManager are automatically saved once entered. You may view them via `python3 JobManager.py -custom`. You can re-run any given experiment by simply typing in the job ID once prompted and entering in the correct `config/config.json`, Docker Swarm, and Dedicate values.
+
+## Deleting a Saved Experiment via JobManager
+You can delete any saved experiment in JobManager with `python3 JobManager.py -remove` and selecting the job to remove when prompted.
+
+## Editing a Saved Experiment via JobManager
+You may edit any experiment saved in JobManager with `python3 JobManager.py -edit` and selecting the job to edit. This will bring up an in-terminal text editor where you can edit the values inputted into the control script. The lines of each job are as follows:
+```
+CloudLab Username
+Total path of private ssh key
+Hostname of controller node
+Github email address
+Number of Swarm Nodes
+Number of Client Nodes
+```
+Please make sure to keep each value on a seperate line similar to how it already looks before making edits.
+
+## Chaining Jobs via JobManager
+One of the strong-suits of JobManager is that you can chain together experiments to test multiple bottleneck triggers with one script run. Enter the chain manager with `python3 JobManager.py -chain`. You will be given a choice of jobs to chain from from your custom jobs library. You may go back and add as many jobs with the regular job instantiation `python3 JobManager.py`. Select the jobs to chain by entering in the job ID followed by a space, then the next job ID. 
+
+After entering in all desired jobs, the `config/config.json`, Docker Swarm, and Dedicate files will populate for the first experiment. Enter as needed, then continue. The experiment will run as usual and once returned will automatically start the next experiment with configuring the containers to use via Docker Swarm in-line text editing.
+
 ## Debugging in VS Code help
 1. Click on the >< symbol in the left bottom corner.
 2. Connect to host > Add New SSH Host > Enter SSH Connection command to the controller node - node-0. You can get this from Cloudlab's Experiment List View page too. It would look something like `ssh Preethi@apt183.apt.emulab.net.` 
