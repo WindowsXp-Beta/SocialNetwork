@@ -494,7 +494,14 @@ services:
     image: 127.0.0.1:5000/cpu_intensive
     deploy:
       placement:
-        constraints: [node.hostname == node-3.<<EXPERIMENT_NAME>>.infosphere.<<SSH_HOST>>]
+        constraints: [node.hostname == node-0.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+
+  io-intensive:
+    image: 127.0.0.1:5000/io_intensive
+    deploy:
+      placement:
+        constraints: [node.hostname == node-0.<<EXPERIMENT_NAME>>.infosphere-pg0.<<SSH_HOST>>]
+  
 networks:
   default:
     driver: overlay
