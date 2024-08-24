@@ -1,4 +1,6 @@
 fabric
+cryptography == 41.0.5
+pyopenssl==24.0.0
 aiohttp
 matplotlib
 pandas
