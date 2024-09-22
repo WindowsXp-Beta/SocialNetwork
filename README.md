@@ -11,7 +11,7 @@
 
 ## Downloading Zip File
 1. Please download the zip file using the following link:
-[Download Zip File](https://filestogeaux.lsu.edu/public/download.php?FILE=xgu5/12038F6iKmz)
+[Download Zip File](https://gtvault-my.sharepoint.com/:f:/g/personal/xwei303_gatech_edu/Evp7rsyycVJOqMeiWWEAXwwBzQLPChBwBxhOgLZPibAvTQ?e=KIJGp9)
 2. Add JDK files to these paths in the project directory- '/RubbosClient/elba/rubbos/jdk1.8.0_241', '/RubbosClient/rubbos/jdk-8u241-linux-x64.tar.gz'.
 3. Make sure SocialNetwork/RubbosClient/elba/rubbos/jdk1.8.0_241/bin has executable permission, if not run `chmod +x SocialNetwork/RubbosClient/elba/rubbos/jdk1.8.0_241/bin/java`
 4. Populate `config/config.json` with your values. Instructions:
