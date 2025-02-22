@@ -24,7 +24,7 @@ def init(tier):
     multi_count_in_sec = 20
     time_window = 1000/multi_count_in_sec
     filename_subfix = "-" + str(time_window) + "ms-ALL"
-    
+
     output_file = timeSpan + "_" + tier + "_multiplicity_wl" + workload + filename_subfix + ".csv"
     output_file2 = timeSpan + "_" + tier + "_responsetime_wl" + workload + filename_subfix + ".csv"
     output_file3 = timeSpan + "_" + tier + "_inout_wl" + workload + filename_subfix + ".csv"
@@ -59,12 +59,12 @@ def main():
                 continue
             parts = line.split(',')
             set_of_models.add(parts[2])
-    
+
     list_of_models = list(set_of_models)
     list_of_models.sort()
     list_of_models.insert(0, "total")
 
-    models = list_of_models 
+    models = list_of_models
     models_title = list_of_models
     for model in models:
         HTTP_input[model] = {}
@@ -246,7 +246,7 @@ def addMulti2(add_from, add_to, stime_epoch, etime_epoch, model,
         dic_multi['total'][add_to2] += add_post
         dic_multi[model][add_to2] += add_post
 
-        mycounter = 0;
+        mycounter = 0
 
         while (add_from2 < add_to2):
             dic_multi['total'][add_from2] += 1.0

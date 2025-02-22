@@ -1,7 +1,5 @@
 
-#n HTTP server information
-##httpd_hostname = 192.168.10.136
-##httpd_port = 8000
+# HTTP server information
 httpd_hostname = 10.10.1.1
 httpd_port = 8080
 
@@ -41,9 +39,9 @@ workload_benchmark_node = 10.10.1.7
 
 workload_remote_client_command = /users/<<USERNAME>>/elba/rubbos/jdk1.8.0_241/bin/java -classpath .:/users/<<USERNAME>>/elba/rubbos/RUBBoS/Client/:/users/<<USERNAME>>/elba/rubbos/RUBBoS/Client/RubbosClient-0.1.jar -Xmx1300m -Dhttp.keepAlive=true -Dhttp.maxConnections=1000000 edu.rice.rubbos.client.NewEmulator
 
-workload_number_of_clients_per_node = 20
+workload_number_of_clients_per_node = <<WORKLOAD>>
 
-workload_dyn = 20
+workload_dyn = <<WORKLOAD>>
 
 # Workload: precise which transition table to use
 workload_user_transition_table = /users/<<USERNAME>>/elba/rubbos/RUBBoS/workload/user_transitions.txt
@@ -79,7 +77,6 @@ database_comment_max_length = 1024
 
 # Monitoring Information
 monitoring_debug_level = 1
-#monitoring_program = /home/xgu/elba/rubbos/sysstat-10.0.2/sar
 monitoring_program = /usr/bin/sar
 monitoring_options = -n DEV -n SOCK -rubw
 monitoring_sampling_in_seconds = 1

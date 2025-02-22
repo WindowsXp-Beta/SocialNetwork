@@ -11,7 +11,7 @@ ssh benchmark "
 "
 
 # Trying to simulation 5000 users
-for i in "rubbos.properties_1000"
+for i in "rubbos.properties"
 do
 
   ssh benchmark "

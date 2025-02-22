@@ -10,14 +10,16 @@ def replace_placeholders(template, config):
     updated_template = template
     for key, value in config.items():
         placeholder = f"<<{key.upper()}>>"
-        updated_template = updated_template.replace(placeholder, value)
+        if key == "workload":
+            value //= 5
+        updated_template = updated_template.replace(placeholder, str(value))
     return updated_template
 
 
 def main():
     config_file = "config/config.json"
     template_files = [
-        "socialNetwork/runtime_files/rubbos.properties_100.template",
+        "socialNetwork/runtime_files/rubbos.properties.template",
         "socialNetwork/docker-compose-swarm.yml.template",
     ]
     for template_file in template_files:

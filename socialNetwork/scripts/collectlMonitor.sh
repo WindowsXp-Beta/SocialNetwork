@@ -12,6 +12,7 @@ do
 	echo 'come here1'
 	#echo $i
 	ssh $i '
+	rm /tmp/node*
 	hostname
 	collectl -i 0.1 -F30 -sCdnZ -oTm  -f /tmp &> /dev/null &
 	'

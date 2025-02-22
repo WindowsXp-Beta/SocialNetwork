@@ -39,15 +39,15 @@ workload_remote_client_nodes = 10.10.1.8,10.10.1.9,10.10.1.10,10.10.1.11
 
 workload_benchmark_node = 10.10.1.7
 
-workload_remote_client_command = /users/azhang/elba/rubbos/jdk1.8.0_241/bin/java -classpath .:/users/azhang/elba/rubbos/RUBBoS/Client/:/users/azhang/elba/rubbos/RUBBoS/Client/RubbosClient-0.1.jar-Xmx1300m -Dhttp.keepAlive=true -Dhttp.maxConnections=1000000 edu.rice.rubbos.client.NewEmulator
+workload_remote_client_command = /users/XinpengW/elba/rubbos/jdk1.8.0_241/bin/java -classpath .:/users/XinpengW/elba/rubbos/RUBBoS/Client/:/users/XinpengW/elba/rubbos/RUBBoS/Client/RubbosClient-0.1.jar -Xmx1300m -Dhttp.keepAlive=true -Dhttp.maxConnections=1000000 edu.rice.rubbos.client.NewEmulator
 
 workload_number_of_clients_per_node = 20
 
 workload_dyn = 20
 
 # Workload: precise which transition table to use
-workload_user_transition_table = /users/azhang/elba/rubbos/RUBBoS/workload/user_transitions.txt
-workload_author_transition_table = /users/azhang/elba/rubbos/RUBBoS/workload/author_transitions.txt
+workload_user_transition_table = /users/XinpengW/elba/rubbos/RUBBoS/workload/user_transitions.txt
+workload_author_transition_table = /users/XinpengW/elba/rubbos/RUBBoS/workload/author_transitions.txt
 workload_number_of_columns = 24
 workload_number_of_rows = 26
 workload_maximum_number_of_transitions = 1000
@@ -68,7 +68,7 @@ database_number_of_authors = 50
 database_number_of_users = 500000
 
 # Stories policy
-database_story_dictionnary = /users/azhang/elba/rubbos/RUBBoS/database/dictionary
+database_story_dictionnary = /users/XinpengW/elba/rubbos/RUBBoS/database/dictionary
 database_story_maximum_length = 1024
 database_oldest_story_year = 1998
 database_oldest_story_month = 1
