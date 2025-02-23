@@ -1,5 +1,6 @@
 {
-    "username": "$your_cloud_lab_username",
-    "experiment_name": "$username-six_digit_number",
-    "ssh_host": "$host_ssh_name"
+    "username": "XinpengW",
+    "experiment_name": "XinpengW-242895",
+    "ssh_host": "infosphere.emulab.net",
+    "workload": 100
 }
